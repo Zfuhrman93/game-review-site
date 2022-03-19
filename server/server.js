@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 require('./config/mongoose.config');
 require('./routes/game.routes')(app);
 require('./routes/review.routes')(app);
+require('./routes/user.routes')(app);
 
 
 app.listen(process.env.PORT, console.log(`Listening on port ${process.env.PORT}`));

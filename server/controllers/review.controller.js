@@ -20,9 +20,21 @@ const getAllReviews = async (req, res) => {
   }
 }
 
+const findByGame = async (req, res) => {
+  try{
+    const gameReviews = await Review.find({ game: req.params.id })
+    res.json(gameReviews)
+  }catch(err){
+    console.log('Error!');
+    res.status(400).json(err);
+  }
+}
+
 const updateReview = async (req, res) => {
   try{
-    const updatedReview = await Review.findOneAndUpdate({ _id: req.params.id })
+    const updatedReview = await Review.findOneAndUpdate({ _id: req.params.id },
+      req.body,
+      { new:true, runValidators:true })
     res.json(updatedReview);
   }catch(err){
     console.log('Error!');
@@ -43,6 +55,7 @@ const deleteReview = async (req, res) => {
 module.exports = {
   addNewReview,
   getAllReviews,
+  findByGame,
   updateReview,
   deleteReview
 }

@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
   review:{
     type: String,
-    required: true
+    required: [true, "Please write your review before submitting."],
+    minlength: [10, "Review must be atleast 10 characters long to submit"]
   },
   score: {
     type: String,
