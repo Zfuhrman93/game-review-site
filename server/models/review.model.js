@@ -15,8 +15,15 @@ const reviewSchema = new mongoose.Schema({
   },
   game: {
     type: String
+  },
+  userName: {
+    type: String
+  }, 
+  gameName: { 
+    type: String
   }
-})
+},
+  { timestamps: true })
 
 const Review = mongoose.model('Review', reviewSchema);
 

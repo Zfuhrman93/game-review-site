@@ -82,6 +82,7 @@ const login = async (req, res) => {
 const protected = async (req, res) => {
   const protectedToken = await req.cookies.usertoken;
   if(!protectedToken){
+    console.log('No Token')
     return;
   }
   console.log(req.cookies)

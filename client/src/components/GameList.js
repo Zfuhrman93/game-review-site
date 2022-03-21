@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from '@reach/router';
 
 const GameList = (props) => {
   const [ gameList, setGameList ] = useState([]);
@@ -20,16 +21,19 @@ const GameList = (props) => {
       <div>
         <table className="table table-striped table-bordered">
           <thead>
-            <th>Cover</th>
-            <th>Name</th>
+            <tr>
+              <th>Cover</th>
+              <th>Name</th>
+              <th>Systems</th>
+            </tr>
           </thead>
           <tbody>
             {gameList.map((game) => {
               return(
                 <tr key={game._id}>
-                  <th><img src={game.gameCover} alt=""/></th>
-                  <th>{game.name}</th>
-                  <td>{game.systems}</td>
+                  <td><img style={{height: "120px"}} src={game.gameCover} alt=""/></td>
+                  <td><Link to={`/game/${game._id}`}>{game.name}</Link></td>
+                  <td>{game.systems[0] === "true" ? "Xbox" : null} {game.systems[1] === "true" ? "PS4" : null} {game.systems[2] === "true" ? "Switch" : null} {game.systems[3] === "true" ? "PC" : null}</td>
                 </tr>
               )
             })}

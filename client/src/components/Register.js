@@ -24,7 +24,7 @@ const Register = (props) => {
     <div>
       <div>
         <Navbar />
-        <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px"}}>
+        <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px", width: "275px", marginTop: "35px"}}>
           <form onSubmit={handleSubmit}>
             <label>User Name:</label><br/><input type='text' onChange={e => {setName(e.target.value)}} /><br/>
             <label>E-mail:</label><br/><input type='text' onChange={e => {setEmail(e.target.value)}} /><br/>

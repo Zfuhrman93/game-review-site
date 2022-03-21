@@ -5,12 +5,13 @@ import Recent from './Recent';
 
 
 const Home = (props) => {
+  const { user } = props;
   return(
     <div>
       <div>
-        <Navbar />
+        <Navbar user={user} />
       </div>
-      <div style ={{display: "flex", padding: "5px"}}>
+      <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px"}}>
         <GameList />
         <Recent />
       </div>

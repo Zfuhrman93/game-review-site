@@ -2,21 +2,21 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
 import { navigate } from '@reach/router';
-const ReviewForm = (props) => {
-  const { user } = props;
+
+const UpdateReview = (props) => {
+  const { id, user } = props;
   const [ review, setReview ] = useState("");
   const [ score, setScore ] = useState("1");
-  const [ game, setGame ] = useState("");
-  const [ gameName, setGameName] = useState("");
-  const [ gameList, setGameList ] = useState([]);
 
   useEffect(()  => {
     async function fetchData() {
       try{
-        const gameListData = await axios.get('http://localhost:8000/api/game');
-        setGameList(gameListData.data);
+        const reviewUpdate = await axios.get(`http://localhost:8000/api/review/edit/${id}`);
+        console.log(reviewUpdate.data[0]);
+        setReview(reviewUpdate.data[0].review);
+        setScore(reviewUpdate.data[0].score);
       }catch(err){
-        console.log(err)
+        console.log(err);
       }
     }
     fetchData();
@@ -25,13 +25,9 @@ const ReviewForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const result = axios.post('http://localhost:8000/api/review', {
+      const result = axios.put(`http://localhost:8000/api/review/${id}`, {
         review,
         score,
-        user: user._id,
-        game,
-        userName: user.name,
-        gameName
       })
       console.log(result);
       navigate('/home')
@@ -46,21 +42,13 @@ const ReviewForm = (props) => {
         <Navbar user={user} />
         <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px", backgroundColor: "white", width: "675px", marginTop: "35px"}}>
           <form onSubmit={handleSubmit}>
-            <label>Your Review:</label><br/><textarea cols="75" onChange={(e) => setReview(e.target.value)} /><br/>
-            <label>Score</label><select onChange={(e) => setScore(e.target.value)}>
+            <label>Your Review:</label><br/><textarea cols="75" value={review} onChange={(e) => setReview(e.target.value)} /><br/>
+            <label>Score</label><select value={score} onChange={(e) => setScore(e.target.value)}>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
-            </select><br/>
-            <label style={{marginRight: "15px"}}>Please Select a Game </label><select onChange={(e) => {setGame(e.target.value);setGameName(e.target.selectedOptions[0].label);console.log(e);}}>
-              <option value="">----</option>
-              {gameList.map((game) => {
-                return(
-                  <option name={game.name} value={game._id}>{game.name}</option>
-                )
-              })}
             </select><br/>
             <input type="submit" value="Add Review" disabled={user ? false : true} />
             {user ? null : <p style={{color: "red"}}>Please log in to add a review!</p>}
@@ -71,4 +59,4 @@ const ReviewForm = (props) => {
   )
 }
 
-export default ReviewForm;
+export default UpdateReview;
