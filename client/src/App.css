@@ -3,6 +3,10 @@
   margin: 0px;
 }
 
+body {
+  background-color: blue;
+}
+
 .nav-bar {
   padding: 10px 10px 0px 0px;
   background-color: black;

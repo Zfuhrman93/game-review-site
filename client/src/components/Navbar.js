@@ -1,6 +1,27 @@
+import { useState, useEffect } from 'react';
 import { Link } from '@reach/router';
+import axios from 'axios';
+
+
 
 const Navbar = (props) => {
+  const [ user, setUser ] = useState("");
+
+  useEffect(async ()  => {
+    try{
+      const userData = await axios.get('http://localhost:8000/api/protected', 
+    { withCredentials: true });
+      try{
+        const userName = await axios.get(`http://localhost:8000/api/user/${userData.data}`)
+        console.log(userName);
+        setUser(userName.data[0].name);
+      }catch(err){
+        console.log(err);
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }, [])
   return(
     <div>
       <div className="nav-bar">
@@ -12,9 +33,7 @@ const Navbar = (props) => {
           <li><Link to={"/review/new"}>Add Review</Link></li>
         </ul>
         <ul>
-          <li><Link to={'/user/login'}>Login</Link></li>
-          <li style={{marginLeft: '5px', marginRight: "5px"}}>|</li>
-          <li><Link to={'/user/new'}>Register</Link></li>
+          { user ? <li style={{marginLeft: '5px', marginRight: "5px"}}>Welcome, { user }!</li> : <div style={{display: 'flex'}}> <li><Link to={'/user/login'}>Login</Link></li> <li style={{marginLeft: '5px', marginRight: "5px"}}>|</li> <li><Link to={'/user/new'}>Register</Link></li></div>}
         </ul>
       </div>
     </div>

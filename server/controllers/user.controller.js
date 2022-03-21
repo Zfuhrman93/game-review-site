@@ -1,9 +1,15 @@
 const User = require('../models/User.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const token = jwt.sign({ _id: 'defdfdsafdfdsaf'}, process.env.SECRET_KEY);
-const unencoded = jwt.verify(token, process.env.SECRET_KEY);
 
+const getUser = async (req, res) => {
+  try{
+    user = await User.find({ _id: req.params.id})
+    res.json(user);
+  }catch(err){
+    console.log(err)
+  }
+}
 
 const registerUser = async (req, res) => {
   const { body } = req;
@@ -63,16 +69,43 @@ const login = async (req, res) => {
 
 
 
-  const userToken = await jwt.sign({ _id: userQuery._id }, process.env.SECRET_KEY)
+  const usertoken = await jwt.sign({ _id: userQuery._id }, process.env.SECRET_KEY)
   res
-    .cookie("usertoken", userToken, process.env.SECRET_KEY, {
+    .cookie("usertoken", usertoken, process.env.SECRET_KEY, {
       httpOnly: true,
       expires: new Date(Date.now() + 90000000),
     })
     .json({ message: "Login Successful" })
 }
 
+
+const protected = async (req, res) => {
+  const protectedToken = await req.cookies.usertoken;
+  if(!protectedToken){
+    return;
+  }
+  console.log(req.cookies)
+  let decodedToken;
+  decodedToken = await jwt.verify(protectedToken, process.env.SECRET_KEY);
+  console.log("Decoding...")
+  console.log(decodedToken)
+  res.send(decodedToken._id)
+/*   let query;
+  try{
+    query = await User.findOne({ _id: decodedToken._id });
+    console.log(query);
+  }catch(err){
+    console.log('Error finding!');
+    res.status(401).json(err);
+    return;
+  }
+  res.json({ name: query.name }) */
+}
+
+
 module.exports = {
   registerUser,
   login,
+  protected,
+  getUser,
 }

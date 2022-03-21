@@ -7,18 +7,14 @@ const Register = (props) => {
   const [ email, setEmail ] =useState('');
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
-  const [ errors, setErrors ] = useState({});
+  const [ errors, setErrors ] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const postData = { name, email, password, confirmPassword };
     try{
-      const newUser = await axios.post('http://localhost:8000/api/register', {
-      name,
-      email,
-      password,
-      confirmPassword
-    })
-    console.log(newUser)
+      const result = await axios.post("http://localhost:8000/api/register", postData)
+      console.log(result)
     }catch(err){
       console.log(err)
     }
@@ -28,13 +24,13 @@ const Register = (props) => {
     <div>
       <div>
         <Navbar />
-        <div>
+        <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px"}}>
           <form onSubmit={handleSubmit}>
-            <label>User Name:</label><input type='text' onChange={e => {setName(e.target.value)}} /><br/>
-            <label>E-mail:</label><input type='text' onChange={e => {setEmail(e.target.value)}} /><br/>
-            <label>Password:</label><input type='text' onChange={e => {setPassword(e.target.value)}} /><br/>
-            <label>Confirm Password:</label><input type='text' onChange={e => {setConfirmPassword(e.target.value)}} /><br/>
-            <input type='submit' />
+            <label>User Name:</label><br/><input type='text' onChange={e => {setName(e.target.value)}} /><br/>
+            <label>E-mail:</label><br/><input type='text' onChange={e => {setEmail(e.target.value)}} /><br/>
+            <label>Password:</label><br/><input type='text' onChange={e => {setPassword(e.target.value)}} /><br/>
+            <label>Confirm Password:</label><br/><input type='text' onChange={e => {setConfirmPassword(e.target.value)}} /><br/>
+            <input type='submit' style={{marginTop: "5px"}} />
           </form>
         </div>
       </div>
