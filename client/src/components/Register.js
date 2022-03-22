@@ -28,8 +28,8 @@ const Register = (props) => {
           <form onSubmit={handleSubmit}>
             <label>User Name:</label><br/><input type='text' onChange={e => {setName(e.target.value)}} /><br/>
             <label>E-mail:</label><br/><input type='text' onChange={e => {setEmail(e.target.value)}} /><br/>
-            <label>Password:</label><br/><input type='text' onChange={e => {setPassword(e.target.value)}} /><br/>
-            <label>Confirm Password:</label><br/><input type='text' onChange={e => {setConfirmPassword(e.target.value)}} /><br/>
+            <label>Password:</label><br/><input type='password' onChange={e => {setPassword(e.target.value)}} /><br/>
+            <label>Confirm Password:</label><br/><input type='password' onChange={e => {setConfirmPassword(e.target.value)}} /><br/>
             <input type='submit' style={{marginTop: "5px"}} />
           </form>
         </div>

@@ -34,7 +34,8 @@ const ReviewForm = (props) => {
         gameName
       })
       console.log(result);
-      navigate('/home')
+      navigate('/home');
+      window.location.reload(false);
     }catch(err){
       console.log(err);
     }

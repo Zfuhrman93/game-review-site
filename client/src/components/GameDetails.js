@@ -33,6 +33,7 @@ const GameDetails = (props) => {
     axios.delete(`http://localhost:8000/api/review/${reviewId}`)
       .then(res => {
         console.log(res);
+        window.location.reload(false);
       })
       .catch(err => console.log(err.response))
   }
@@ -58,10 +59,10 @@ const GameDetails = (props) => {
             <h3 style={{marginTop: "15px"}}>Reviews</h3><br/>
             {reviews.map((review) => {
               return(
-                <div style={{marginTop: "15px"}}>
+                <div key={review._id} style={{marginTop: "15px"}}>
                   Review by {review.userName} | Score: {review.score}/5
                   <p>{review.review}</p>
-                  {user && review.user == user._id ? <span><button className='btn-small btn-info' onClick={() => navigate(`/review/edit/${review._id}`)}>Edit</button> | <button className='btn-small btn-danger' onClick={() => handleDelete(review._id)}>Delete</button></span> : null}
+                  {user && review.user == user._id ? <span><button className='btn btn-info' onClick={() => navigate(`/review/edit/${review._id}`)}>Edit</button> | <button className='btn btn-danger' onClick={() => handleDelete(review._id)}>Delete</button></span> : null}
                 </div>
               )
             })}

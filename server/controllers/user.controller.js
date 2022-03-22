@@ -91,22 +91,18 @@ const protected = async (req, res) => {
   console.log("Decoding...")
   console.log(decodedToken)
   res.send(decodedToken._id)
-/*   let query;
-  try{
-    query = await User.findOne({ _id: decodedToken._id });
-    console.log(query);
-  }catch(err){
-    console.log('Error finding!');
-    res.status(401).json(err);
-    return;
-  }
-  res.json({ name: query.name }) */
+}
+
+const logout = (req, res) => {
+    res.clearCookie("usertoken", {} , { signed: true, httpOnly: true, path: '/' })
+    res.json({ message: "Log out successful!" })
 }
 
 
 module.exports = {
   registerUser,
   login,
+  logout,
   protected,
   getUser,
 }

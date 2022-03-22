@@ -22,6 +22,7 @@ const GameForm = (props) => {
       })
       console.log(result);
       navigate('/home')
+      window.location.reload(false);;
     }catch(err){
       console.log(err);
     }

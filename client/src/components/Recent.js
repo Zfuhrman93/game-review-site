@@ -18,10 +18,10 @@ const Recent = (props) => {
   }, [])
   return(
     <div>
-      <div style={{border: "2px solid black", marginLeft: "10px"}}>
+      <div style={{border: "2px solid lightgrey", marginLeft: "10px", padding: "10px"}}>
         {recentReviews.map((reviews) => {
           return(
-            <p>{reviews.userName} gave {reviews.gameName} a {reviews.score}/5!</p>
+            <p key={reviews._id}>{reviews.userName} gave {reviews.gameName} a {reviews.score}/5!</p>
           )
         })}
       </div>

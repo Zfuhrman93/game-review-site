@@ -19,8 +19,11 @@ const Login = (props) => {
     )
       console.log(result);
       navigate('/home');
+      window.location.reload(false);
     }catch(err){
       console.log(err.message);
+      setErrors(err.response.data.err.errors);
+      console.log(errors);
     }
   }
   
@@ -31,7 +34,7 @@ const Login = (props) => {
         <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px", width: "275px", marginTop: "35px"}}>
           <form onSubmit={handleSubmit}>
             <label>E-mail:</label><br/><input type='text' onChange={e => {setEmail(e.target.value)}} /><br/>
-            <label>Password:</label><br/><input type='text' onChange={e => {setPassword(e.target.value)}} /><br/>
+            <label>Password:</label><br/><input type='password' onChange={e => {setPassword(e.target.value)}} /><br/>
             <input type='submit' style={{marginTop: "5px"}} />
           </form>
         </div>
