@@ -80,10 +80,3 @@ module.exports = {
   updateReview,
   deleteReview
 }
-
-/* try{
-
-}catch(err){
-  console.log('Error!');
-  res.status(400).json(err);
-} */

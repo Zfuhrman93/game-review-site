@@ -9,25 +9,25 @@ const Navbar = (props) => {
     try{
       const request = await axios.post('http://localhost:8000/api/logout', {}, { withCredentials: true });
       console.log(request);
-      navigate('/home');
+      navigate('/');
       window.location.reload(false);
     }catch(err){
       console.log(err.response)
     }
   }
   const { user } = props
+  console.log(user);
   return(
     <div>
       <div className="nav-bar">
         <ul>
-          <li><Link to={"/home"}>Home</Link></li>
+          <li><Link to={"/"}>Home</Link></li>
           <li style={{marginLeft: '5px', marginRight: "5px"}}>|</li>
-          <li><Link to={"/game/new"}>Add a Game</Link></li>
-          <li style={{marginLeft: '5px', marginRight: "5px"}}>|</li>
+          {user && user.admin ? <li style={{marginRight: "5px"}}><Link to={"/game/new"}>Add a Game</Link> |</li> : null}
           <li><Link to={"/review/new"}>Add Review</Link></li>
         </ul>
         <ul>
-          { user ? <li style={{marginLeft: '5px', marginRight: "5px"}}>Welcome, { user.name }! | <button className="btn-small btn-danger" onClick={handleLogout}>LOGOUT</button></li> : <div style={{display: 'flex'}}> <li><Link to={'/user/login'}>Login</Link></li> <li style={{marginLeft: '5px', marginRight: "5px"}}>|</li> <li><Link to={'/user/new'}>Register</Link></li></div>}
+          { user ? <li style={{marginLeft: '5px', marginRight: "5px"}}>Welcome, { user.name }! | <button className="btn-small btn-danger" onClick={handleLogout}>LOGOUT</button></li> : <div style={{display: 'flex'}}> <li><Link style={{marginTop: "15px", border: "2px solid black", paddingBottom: "8px", paddingRight: "8px", paddingLeft: "8px", backgroundColor: "white", borderRadius: "20px"}} to={'/login-register'}>Sign-In</Link></li></div>}
         </ul>
       </div>
     </div>

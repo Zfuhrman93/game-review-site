@@ -10,6 +10,10 @@ const GameSchema = new mongoose.Schema({
   },
   gameCover: {
     type: String
+  },
+  topPick: {
+    type: Boolean,
+    default: false
   }
 })
 

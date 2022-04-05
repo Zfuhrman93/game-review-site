@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
   review:{
     type: String,
-    required: [true, "Please write your review before submitting."],
+    required: [true, "Please write your review before submitting"],
     minlength: [10, "Review must be atleast 10 characters long to submit"]
   },
   score: {
@@ -14,7 +14,8 @@ const reviewSchema = new mongoose.Schema({
     type: String
   },
   game: {
-    type: String
+    type: String,
+    required: [true, "Please select a game to review"]
   },
   userName: {
     type: String

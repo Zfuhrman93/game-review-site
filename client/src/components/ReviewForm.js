@@ -9,6 +9,7 @@ const ReviewForm = (props) => {
   const [ game, setGame ] = useState("");
   const [ gameName, setGameName] = useState("");
   const [ gameList, setGameList ] = useState([]);
+  const [ errors, setErrors ] = useState([]);
 
   useEffect(()  => {
     async function fetchData() {
@@ -25,7 +26,7 @@ const ReviewForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const result = axios.post('http://localhost:8000/api/review', {
+      const result = await axios.post('http://localhost:8000/api/review', {
         review,
         score,
         user: user._id,
@@ -34,10 +35,11 @@ const ReviewForm = (props) => {
         gameName
       })
       console.log(result);
-      navigate('/home');
+      navigate('/');
       window.location.reload(false);
     }catch(err){
-      console.log(err);
+      console.log(err.response.data.errors);
+      setErrors(err.response.data.errors);
     }
   }
 
@@ -65,6 +67,8 @@ const ReviewForm = (props) => {
             </select><br/>
             <input type="submit" value="Add Review" disabled={user ? false : true} />
             {user ? null : <p style={{color: "red"}}>Please log in to add a review!</p>}
+            {errors.review ? <p style={{color: "red"}}>{errors.review.message}</p> : null}
+            {errors.game ? <p style={{color: "red"}}>{errors.game.message}</p> : null}
           </form>
         </div>
       </div>

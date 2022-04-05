@@ -30,6 +30,27 @@ const getGameById = async(req, res) => {
   }
 }
 
+const getGamesByTop = async(req, res) => {
+  try{
+    const games = Game.find({ topPick: true })
+    res.json(games);
+  }catch(err){
+    res.status(400).json(err);
+  }
+}
+
+const updateGame = async (req, res) => {
+  try{
+    const updatedGame = await Game.findOneAndUpdate({ _id: req.params.id },
+      req.body,
+      { new:true, runValidators:true })
+    res.json(updatedGame);
+  }catch(err){
+    console.log('Error!');
+    res.status(400).json(err);
+  }
+}
+
 const removeGame = async (req, res) => {
   try{
     const deletedGame = await Game.deleteOne({ _id: req.params.id })
@@ -44,6 +65,8 @@ module.exports = {
   addNewGame,
   getAllGames,
   getGameById,
+  getGamesByTop,
+  updateGame,
   removeGame,
 
 }

@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
-import Home from './components/Home';
+import HomeView from './views/HomeView';
+import LoginRegister from './views/LoginRegister';
 import GameForm from './components/GameForm';
 import ReviewForm from './components/ReviewForm';
 import UpdateReview from './components/UpdateReview';
-import Login from './components/Login';
-import Register  from './components/Register';
 import GameDetails from './components/GameDetails';
 import { Router } from '@reach/router';
 import './App.css';
@@ -20,7 +19,6 @@ function App() {
         { withCredentials: true });
         try{
           const userName = await axios.get(`http://localhost:8000/api/user/${userData.data}`)
-          console.log(userName);
           setUser(userName.data[0]);
         }catch(err){
           console.log(err);
@@ -33,15 +31,14 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="App" style={{height: "100%"}}>
       <Router>
-        <Home user={user} path='/home' />
+        <HomeView user={user} path='/' />
         <GameDetails user={user} path='/game/:id' />
         <GameForm user={user} path='/game/new' />
         <ReviewForm user={user} path='/review/new' />
         <UpdateReview user={user} path='/review/edit/:id' />
-        <Login user={user} path='/user/login' />
-        <Register user={user} path ='/user/new' />
+        <LoginRegister user={user} path='/login-register' />
       </Router>
     </div>
   );
