@@ -66,9 +66,9 @@ const GameDetails = (props) => {
       <div>
         <Navbar user={user} />
       </div>
-      <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", padding: "5px", backgroundColor: "white", width: "700px", marginTop: "35px"}}>
+      <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", padding: "5px", backgroundColor: "white", width: "900px", marginTop: "35px"}}>
         <div style={{}}>
-          <img alt={gameData.name} style={{height: "500px", width: "300px"}} src={gameData.gameCover} />
+          <img alt={gameData.name} style={{height: "500px", width: "400px"}} src={gameData.gameCover} />
         </div>
         {user && user.admin ? <div>
           <button className="btn btn-danger" onClick={() => deleteGame(id)}>Delete Game</button><br/>
