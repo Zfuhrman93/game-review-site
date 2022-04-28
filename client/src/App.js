@@ -8,6 +8,7 @@ import UpdateReview from './components/UpdateReview';
 import GameDetails from './components/GameDetails';
 import { Router } from '@reach/router';
 import './App.css';
+import GameDetailsView from './views/GameDetailsView';
 
 function App() {
   const [ user, setUser ] = useState();
@@ -34,7 +35,7 @@ function App() {
     <div className="App" style={{height: "100%"}}>
       <Router>
         <HomeView user={user} path='/' />
-        <GameDetails user={user} path='/game/:id' />
+        <GameDetailsView user={user} path='/game/:id' />
         <GameForm user={user} path='/game/new' />
         <ReviewForm user={user} path='/review/new' />
         <UpdateReview user={user} path='/review/edit/:id' />

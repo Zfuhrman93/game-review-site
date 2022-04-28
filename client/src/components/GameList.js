@@ -33,7 +33,10 @@ const GameList = (props) => {
                 <tr key={game._id}>
                   <td><img style={{height: "120px"}} src={game.gameCover} alt=""/></td>
                   <td><Link to={`/game/${game._id}`}>{game.name}</Link></td>
-                  <td>{game.systems[0] === "true" ? "Xbox" : null} {game.systems[1] === "true" ? "PS4" : null} {game.systems[2] === "true" ? "Switch" : null} {game.systems[3] === "true" ? "PC" : null}</td>
+                  <td>{game.systems[0] === "true" ? <img style={{height: "24px"}} src={require("../assets/Xbox.png")} alt="Xbox" /> : null} 
+                  {game.systems[1] === "true" ? <img style={{height: "24px"}} src={require("../assets/PS4.png")} alt="PS4" /> : null} 
+                  {game.systems[2] === "true" ? <img style={{height: "24px"}} src={require("../assets/Switch.png")} alt="Switch"/> : null} 
+                  {game.systems[3] === "true" ? <img style={{height: "24px"}} src={require("../assets/Steam.png")} alt="PC"/> : null}</td>
                 </tr>
               )
             })}

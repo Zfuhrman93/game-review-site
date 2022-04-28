@@ -63,25 +63,20 @@ const GameDetails = (props) => {
 
   return(
     <div>
-      <div>
-        <Navbar user={user} />
-      </div>
       <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", padding: "5px", backgroundColor: "white", width: "900px", marginTop: "35px"}}>
         <div style={{}}>
           <img alt={gameData.name} style={{height: "500px", width: "400px"}} src={gameData.gameCover} />
         </div>
         {user && user.admin ? <div>
           <button className="btn btn-danger" onClick={() => deleteGame(id)}>Delete Game</button><br/>
-          <label>Editor's Pick:</label><input style={{marginLeft: "10px", marginTop: "5px"}} checked={topPick} onChange={() => setTopPick(!topPick)} type="checkbox" /><br/>
-          <button onClick={handleUpdate}>Update!</button>
         </div> : null}
-        <div>
-          <p style={{marginLeft: "45px"}}>{gameData.name}</p>
-          {gameData.systems ? <div style={{border: "2px solid black", width: "150px", textAlign: "center"}}>
-            {gameData && gameData.systems[0] == "true" ? <p>Xbox</p> : null}
-            {gameData && gameData.systems[1] == "true" ? <p>PS4</p> : null}
-            {gameData && gameData.systems[2] == "true" ? <p>Switch</p> : null}
-            {gameData && gameData.systems[3] == "true" ? <p>PC</p> : null}
+        <div style={{display:"flex", flexDirection: "column", textAlign: "center"}}>
+          <p>{gameData.name}</p>
+          {gameData.systems ? <div style={{paddingTop: "5px", textAlign: "center"}}>
+            {gameData && gameData.systems[0] === "true" ? <img src={require("../assets/Xbox.png")} alt="Xbox" /> : null}
+            {gameData && gameData.systems[1] === "true" ? <img src={require("../assets/PS4.png")} alt="PS4" /> : null}
+            {gameData && gameData.systems[2] === "true" ? <img src={require("../assets/Switch.png")} alt="Switch"/> : null}
+            {gameData && gameData.systems[3] === "true" ? <img src={require("../assets/Steam.png")} alt="PC"/> : null}
           </div> : null}
         </div><br/>
         <div style={{width: "500px"}}>
