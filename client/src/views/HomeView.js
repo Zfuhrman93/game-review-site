@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import Navbar from '../components/Navbar';
-import GameList from '../components/GameList';
-import Recent from '../components/Recent';
+import React from 'react';
+import { Suspense } from 'react';
+const Navbar = React.lazy(() => import('../components/Navbar'));
+const GameList = React.lazy(() => import('../components/GameList'));
+const Recent = React.lazy(() => import('../components/Recent'));
 
 
 const HomeView = (props) => {
@@ -9,11 +10,15 @@ const HomeView = (props) => {
   return(
     <div style={{textAlign: 'center'}}>
       <div>
+      <Suspense fallback={<div>Loading...</div>}>
         <Navbar user={user} />
+      </Suspense>
       </div>
       <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px"}}>
-        <GameList />
-        <Recent />
+        <Suspense fallback={<div>Loading...</div>}>
+          <GameList />
+          <Recent />
+        </Suspense>
       </div>
     </div>
   )

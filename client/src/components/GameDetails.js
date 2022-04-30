@@ -1,4 +1,3 @@
-import Navbar from './Navbar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
@@ -6,7 +5,6 @@ import { navigate } from '@reach/router';
 const GameDetails = (props) => {
   const { id, user } = props;
   const [ gameData, setGameData ] = useState({});
-  const [ topPick, setTopPick ] = useState(false);
   const [ reviews, setReviews ] = useState([]);
 
   useEffect(()  => {
@@ -17,7 +15,6 @@ const GameDetails = (props) => {
         const data = await axios.get(`http://localhost:8000/api/game/${id}`)
         console.log(data);
         setGameData(data.data[0])
-        setTopPick(data.data[0].topPick)
       }catch(err){
         console.log(err)
       }
@@ -38,17 +35,6 @@ const GameDetails = (props) => {
       navigate('/');
     }catch(err){
       console.log(err);
-    }
-  }
-
-  const handleUpdate = async () => {
-    try{
-      const updatedGame = await axios.put(`http://localhost:8000/api/game/${id}`, {
-        topPick
-      })
-      console.log(updatedGame);
-    }catch(err){
-      console.log(err)
     }
   }
 
@@ -73,10 +59,10 @@ const GameDetails = (props) => {
         <div style={{display:"flex", flexDirection: "column", textAlign: "center"}}>
           <p>{gameData.name}</p>
           {gameData.systems ? <div style={{paddingTop: "5px", textAlign: "center"}}>
-            {gameData && gameData.systems[0] === "true" ? <img src={require("../assets/Xbox.png")} alt="Xbox" /> : null}
-            {gameData && gameData.systems[1] === "true" ? <img src={require("../assets/PS4.png")} alt="PS4" /> : null}
-            {gameData && gameData.systems[2] === "true" ? <img src={require("../assets/Switch.png")} alt="Switch"/> : null}
-            {gameData && gameData.systems[3] === "true" ? <img src={require("../assets/Steam.png")} alt="PC"/> : null}
+            {gameData && gameData.systems[0] === "true" ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Xbox.png")} alt="Xbox" /> : null}
+            {gameData && gameData.systems[1] === "true" ? <img style={{height: "48px", width: "48px"}} src={require("../assets/PS4.png")} alt="PS4" /> : null}
+            {gameData && gameData.systems[2] === "true" ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Switch.png")} alt="Switch"/> : null}
+            {gameData && gameData.systems[3] === "true" ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Steam.png")} alt="PC"/> : null}
           </div> : null}
         </div><br/>
         <div style={{width: "500px"}}>

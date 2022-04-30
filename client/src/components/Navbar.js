@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Link, navigate } from '@reach/router';
 import axios from 'axios';
 

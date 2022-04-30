@@ -5,7 +5,6 @@ import LoginRegister from './views/LoginRegister';
 import GameForm from './components/GameForm';
 import ReviewForm from './components/ReviewForm';
 import UpdateReview from './components/UpdateReview';
-import GameDetails from './components/GameDetails';
 import { Router } from '@reach/router';
 import './App.css';
 import GameDetailsView from './views/GameDetailsView';
