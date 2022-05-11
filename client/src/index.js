@@ -5,6 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css'
 
+if(module.hot) {
+  module.hot.accept()
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
