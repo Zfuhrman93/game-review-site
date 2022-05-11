@@ -48,8 +48,8 @@ const GameForm = (props) => {
             <input type='checkbox' value={nSwitch} onChange={() => setNSwitch(!nSwitch)} /><label style={{marginRight: "5px"}}>Switch</label>
             <input type='checkbox' value={PC} onChange={() => setPC(!PC)} /><label style={{marginRight: "5px"}}>PC</label><br/>
             {!xbox && !PS4 && !nSwitch && !PC ? <p style={{color: "red"}}>Please select at least one system</p> : null}
-            <label>Game Cover URL</label><br/><input type="text" onChange={(e) => setGameCover(e.target.value)}  /><br/>
-            <input type="submit" value="Add Game" disabled={user ? false : true} />
+            <label>Game Cover URL</label><br/><input type="file" accept=".jpg, .png" onChange={((e) => setGameCover(e.target.files[0]))} /><br/>
+            <input type="submit" value="Add Game" style={{marginTop: "7px"}} disabled={user ? false : true} />
             {user ? null : <p style={{color: "red"}}>Please log in to add a game!</p>}
           </form>
         </div>
