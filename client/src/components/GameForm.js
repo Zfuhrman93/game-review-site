@@ -19,8 +19,9 @@ const GameForm = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try{
-      const result = await axios.post('http://localhost:8000/api/game', {
+      const result = await axios.post('http://localhost:8000/api/game/add', {
         name,
         systems: [xbox, PS4, nSwitch, PC],
         gameCover
@@ -39,8 +40,8 @@ const GameForm = (props) => {
       <div>
         <Navbar user={user} />
         <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px", backgroundColor: "white", width: "275px", marginTop: "35px"}}>
-          <form onSubmit={handleSubmit}>
-            <label>Game Name:</label><br/><input type="text" onChange={(e) => setName(e.target.value)} /><br/>
+          <form  action='http://localhost:8000/api/game/add' method='POST' encType='multipart/form-data'>
+            <label>Game Name:</label><br/><input name="name" type="text" onChange={(e) => setName(e.target.value)} /><br/>
             {errors.name ? <p style={{color: "red"}}>{errors.name.message}</p> : null}
             <label>Systems</label><br/>
             <input type='checkbox' value={xbox} onChange={() => setXbox(!xbox)} /><label style={{marginRight: "5px"}}>Xbox One</label>
@@ -48,7 +49,7 @@ const GameForm = (props) => {
             <input type='checkbox' value={nSwitch} onChange={() => setNSwitch(!nSwitch)} /><label style={{marginRight: "5px"}}>Switch</label>
             <input type='checkbox' value={PC} onChange={() => setPC(!PC)} /><label style={{marginRight: "5px"}}>PC</label><br/>
             {!xbox && !PS4 && !nSwitch && !PC ? <p style={{color: "red"}}>Please select at least one system</p> : null}
-            <label>Game Cover URL</label><br/><input type="file" accept=".jpg, .png" onChange={((e) => setGameCover(e.target.files[0]))} /><br/>
+            <label>Game Cover URL</label><br/><input name='file' type="file" accept=".jpeg, .jpg, .png" onChange={((e) => setGameCover(e.target.files[0]))} /><br/>
             <input type="submit" value="Add Game" style={{marginTop: "7px"}} disabled={user ? false : true} />
             {user ? null : <p style={{color: "red"}}>Please log in to add a game!</p>}
           </form>

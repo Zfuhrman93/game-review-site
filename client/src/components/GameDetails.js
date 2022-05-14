@@ -9,15 +9,22 @@ const GameDetails = (props) => {
 
   useEffect(()  => {
     console.log(user)
+    axios.get(`http://localhost:8000/api/game/${id}`)
+      .then((game) => {
+        setGameData(game.data[0])
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
     fetchData();
     async function fetchData() {
-      try{
+      /* try{
         const data = await axios.get(`http://localhost:8000/api/game/${id}`)
         console.log(data);
-        setGameData(data.data[0])
+        await setGameData(data.data[0])
       }catch(err){
         console.log(err)
-      }
+      } */
       try{
         const reviewData = await axios.get(`http://localhost:8000/api/review/${id}`);
         console.log(reviewData);
@@ -49,9 +56,9 @@ const GameDetails = (props) => {
 
   return(
     <div>
-      <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", padding: "5px", backgroundColor: "white", width: "900px", marginTop: "35px"}}>
+      <div key={gameData._id} className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", padding: "5px", backgroundColor: "white", width: "900px", marginTop: "35px"}}>
         <div style={{}}>
-          <img alt={gameData.name} style={{height: "500px", width: "400px"}} src={gameData.gameCover} />
+          {gameData.gameCover ? <img src={require('../images/' + gameData.gameCover)} alt={gameData.name} style={{height: "350px", width: "250px"}}  /> : null}
         </div>
         {user && user.admin ? <div>
           <button className="btn btn-danger" onClick={() => deleteGame(id)}>Delete Game</button><br/>

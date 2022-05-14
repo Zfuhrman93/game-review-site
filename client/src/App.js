@@ -11,7 +11,6 @@ import GameDetailsView from './views/GameDetailsView';
 
 const realError = console.error;
 console.error = (...x) => {
-  // debugger;
   if (x[0] === 'Warning: The tag <hl> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter.') {
     return;
   }

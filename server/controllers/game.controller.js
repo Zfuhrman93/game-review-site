@@ -1,8 +1,19 @@
 const Game = require('../models/game.model');
+const Sharp = require('sharp')
 
 const addNewGame = async (req, res) => {
+  const name = req.body.name;
+  const systems = req.body.systems;
+  console.log(req.file)
+  let gameCover
+  Sharp(req.file.filename)                        
+    .webp()                   
+    .then( newBuffer => gameCover = newBuffer )
+
+  const data = { name, systems, gameCover}
   try{
-    const newGame = await Game.create(req.body);
+    const newGame = await new Game(data);
+    newGame.save()
     res.json(newGame);
   }catch(err){
     console.log('Error!');

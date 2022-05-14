@@ -31,7 +31,7 @@ const GameList = (props) => {
             {gameList.map((game) => {
               return(
                 <tr key={game._id}>
-                  <td><img style={{height: "135px", width: "135px"}} src={game.gameCover + "?crop=circle"} alt=""/></td>
+                  <td><img style={{height: "200px", width: "150px"}} src={require('../images/' + game.gameCover)} alt=""/></td>
                   <td><Link to={`/game/${game._id}`}>{game.name}</Link></td>
                   <td>{game.systems[0] === "true" ? <img style={{height: "24px", width: "24px"}} src={require("../assets/Xbox.png")} alt="Xbox" /> : null} 
                   {game.systems[1] === "true" ? <img style={{height: "24px", width: "24px"}} src={require("../assets/PS4.png")} alt="PS4" /> : null} 
