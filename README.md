@@ -10,5 +10,7 @@ Reviews - User's can browse the list of games from the home menu, and when the f
 
 Games - The site admin account can add games with the game's Name, Systems it's on, and an image for the game. The games will then all populate on a list on the home page for users to browse and decide which game they would like to review. Admin's can also delete games from the home page.
 
-<img src ="/demos/demo1.gif" />
-<img src ="/demos/demo2.gif" />
+<p align="center">
+  <img src ="/demos/demo1.gif" />
+  <img src ="/demos/demo2.gif" />
+</p>
