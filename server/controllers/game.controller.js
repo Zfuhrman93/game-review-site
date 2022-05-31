@@ -1,8 +1,21 @@
 const Game = require('../models/game.model');
+const Sharp = require('sharp')
 
 const addNewGame = async (req, res) => {
+  console.log(req.body)
+  const name = req.body.name;
+  const xbox = req.body.xbox;
+  const PS4 = req.body.PS4;
+  const nSwitch = req.body.nSwitch;
+  const PC = req.body.PC;
+  const gameCover = req.file.filename;
+
+  console.log(req.file)
+
+  const data = { name, xbox, PS4, nSwitch, PC, gameCover}
   try{
-    const newGame = await Game.create(req.body);
+    const newGame = await new Game(data);
+    newGame.save()
     res.json(newGame);
   }catch(err){
     console.log('Error!');
