@@ -18,13 +18,6 @@ const GameDetails = (props) => {
       })
     fetchData();
     async function fetchData() {
-      /* try{
-        const data = await axios.get(`http://localhost:8000/api/game/${id}`)
-        console.log(data);
-        await setGameData(data.data[0])
-      }catch(err){
-        console.log(err)
-      } */
       try{
         const reviewData = await axios.get(`http://localhost:8000/api/review/${id}`);
         console.log(reviewData);
@@ -65,14 +58,12 @@ const GameDetails = (props) => {
         </div> : null}
         <div style={{display:"flex", flexDirection: "column", textAlign: "center"}}>
           <p>{gameData.name}</p>
-          {gameData.systems ? <div style={{paddingTop: "5px", textAlign: "center"}}>
-            {gameData && gameData.systems[0] === "true" ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Xbox.png")} alt="Xbox" /> : null}
-            {gameData && gameData.systems[1] === "true" ? <img style={{height: "48px", width: "48px"}} src={require("../assets/PS4.png")} alt="PS4" /> : null}
-            {gameData && gameData.systems[2] === "true" ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Switch.png")} alt="Switch"/> : null}
-            {gameData && gameData.systems[3] === "true" ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Steam.png")} alt="PC"/> : null}
-          </div> : null}
+          {gameData && gameData.xbox ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Xbox.png")} alt="Xbox" /> : null}
+          {gameData && gameData.PS4 ? <img style={{height: "48px", width: "48px"}} src={require("../assets/PS4.png")} alt="PS4" /> : null}
+          {gameData && gameData.nSwitch ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Switch.png")} alt="Switch"/> : null}
+          {gameData && gameData.PC ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Steam.png")} alt="PC"/> : null}
         </div><br/>
-        <div style={{width: "500px"}}>
+        <div style={{width: "800px", textAlign: "center"}}>
             <h3 style={{marginTop: "15px"}}>Reviews</h3><br/>
             {reviews.map((review) => {
               return(

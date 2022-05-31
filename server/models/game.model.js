@@ -5,15 +5,20 @@ const GameSchema = new mongoose.Schema({
     type: String,
     required: [true, "Game must have a name to be added to the site."]
   },
-  systems: {
-    type: [String]
+  xbox: {
+    type: Boolean
+  },
+  PS4: {
+    type: Boolean
+  },
+  nSwitch: {
+    type: Boolean
+  },
+  PC: {
+    type: Boolean
   },
   gameCover: {
     type: String
-  },
-  topPick: {
-    type: Boolean,
-    default: false
   }
 })
 

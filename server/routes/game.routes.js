@@ -1,8 +1,6 @@
 const { addNewGame, getAllGames, getGameById, removeGame, updateGame, getGamesByTop } = require('../controllers/game.controller');
 const multer = require('multer');
-const express = require('express')
 const path = require('path');
-const router = express.Router()
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
