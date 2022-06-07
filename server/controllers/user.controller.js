@@ -49,8 +49,6 @@ const login = async (req, res) => {
     return;
   }
 
-  console.log(userQuery);
-
   if(userQuery === null){
     res.status(400).json({ error: "Cannot find user with that E-mail" });
     return;
@@ -82,14 +80,10 @@ const login = async (req, res) => {
 const protected = async (req, res) => {
   const protectedToken = await req.cookies.usertoken;
   if(!protectedToken){
-    console.log('No Token')
     return;
   }
-  console.log(req.cookies)
   let decodedToken;
   decodedToken = await jwt.verify(protectedToken, process.env.SECRET_KEY);
-  console.log("Decoding...")
-  console.log(decodedToken)
   res.send(decodedToken._id)
 }
 

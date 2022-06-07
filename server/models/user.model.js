@@ -30,7 +30,6 @@ UserSchema.virtual("confirmPassword")
   .set((value) => (this._confirmPassword = value));
 
 UserSchema.pre("validate", function (next) {
-  console.log("Inside Validate");
   if(this.password !== this.confirmPassword){
     this.invalidate("confirmPassword", "Passwords must match");
   }
@@ -38,12 +37,10 @@ UserSchema.pre("validate", function (next) {
 });
 
 UserSchema.pre("save", function (next) {
-  console.log("Inside Hash");
   bcrypt
     .hash(this.password, 10)
     .then((hash) => {
       this.password = hash;
-      console.log("HASHING");
       next();
     })
     .catch((err) => {
