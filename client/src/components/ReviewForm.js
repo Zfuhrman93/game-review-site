@@ -22,6 +22,7 @@ const ReviewForm = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(game[0].name)
     try{
       const result = await axios.post('http://localhost:8000/api/review', {
         review,
@@ -29,7 +30,7 @@ const ReviewForm = (props) => {
         user: user._id,
         game: id,
         userName: user.name,
-        gameName: game.name
+        gameName: game[0].name
       })
       console.log(result);
       navigate('/');
