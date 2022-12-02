@@ -21,7 +21,8 @@ const reviewSchema = new mongoose.Schema({
     type: String
   }, 
   gameName: { 
-    type: String
+    type: String,
+    required: [true]
   }
 },
   { timestamps: true })

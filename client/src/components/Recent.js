@@ -7,6 +7,7 @@ const Recent = (props) => {
   async function fetchData(){
     try{
       const recents = await axios.get('http://localhost:8000/api/review/recent');
+      console.log('Recents:')
       console.log(recents);
       setRecentReviews(recents.data);
     }catch(err){
