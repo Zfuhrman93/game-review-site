@@ -4,13 +4,15 @@ import Navbar from '../components/Navbar';
 
 const LoginRegister = (props) => {
   const { user } = props;
-  
+
   return(
     <div>
       <Navbar />
-      <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
-        <Login user={user} />
-        <Register user={user} />
+      <div className="page">
+        <div className="auth-grid">
+          <Login user={user} />
+          <Register user={user} />
+        </div>
       </div>
     </div>
   )

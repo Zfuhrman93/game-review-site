@@ -7,13 +7,13 @@ const Login = (props) => {
   const [ email, setEmail ] =useState('');
   const [ password, setPassword ] = useState('');
   const [ errors, setErrors ] = useState({});
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const postData = { email, password };
     try{
-      const result = await axios.post('http://localhost:8000/api/login', 
-      postData, 
+      const result = await axios.post('http://localhost:8000/api/login',
+      postData,
       { withCredentials: true }
     )
       console.log(result);
@@ -24,19 +24,22 @@ const Login = (props) => {
       setErrors(err.response.data);
     }
   }
-  
+
   return(
-    <div className="login">
-      <div>
-        <div className="container" style = {{textalign: "center", height: "250px", display: "flex", justifyContent: "center", padding: "10px", backgroundColor: "white", width: "275px", marginTop: "35px"}}>
-          <form onSubmit={handleSubmit}>
-          {errors ? <p style={{color: "red"}}>{errors.error}</p> : null}
-            <label>E-mail:</label><br/><input type='text' onChange={e => {setEmail(e.target.value)}} /><br/>
-            <label>Password:</label><br/><input type='password' onChange={e => {setPassword(e.target.value)}} /><br/>
-            <input type='submit' style={{marginTop: "5px"}} />
-          </form>
+    <div className="form-card login">
+      <h2>Welcome back</h2>
+      <form onSubmit={handleSubmit}>
+        {errors && errors.error ? <p className="error-text">{errors.error}</p> : null}
+        <div className="field">
+          <label>E-mail</label>
+          <input type='text' onChange={e => {setEmail(e.target.value)}} />
         </div>
-      </div>
+        <div className="field">
+          <label>Password</label>
+          <input type='password' onChange={e => {setPassword(e.target.value)}} />
+        </div>
+        <input type='submit' value="Log in" className="btn-primary-gradient" />
+      </form>
     </div>
   )
 }

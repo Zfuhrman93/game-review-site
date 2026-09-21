@@ -42,25 +42,28 @@ const ReviewForm = (props) => {
   }
 
   return(
-    <div>
-      <div>
-        <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px", backgroundColor: "white", width: "675px", marginTop: "35px"}}>
-          <form onSubmit={handleSubmit}>
-            <label>Add a new review:<br/><textarea id="review" label="review" cols="75" onChange={(e) => setReview(e.target.value)} /></label><br/>
-            <label>Score<select onChange={(e) => setScore(e.target.value)}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select></label><br/>
-            <input type="submit" value="Add Review" style={{marginTop: "10px"}} disabled={user ? false : true} />
-            {user ? null : <p style={{color: "red"}}>Please log in to add a review!</p>}
-            {errors.review ? <p style={{color: "red"}}>{errors.review.message}</p> : null}
-            {errors.game ? <p style={{color: "red"}}>{errors.game.message}</p> : null}
-          </form>
+    <div className="form-card">
+      <h2>Add a new review</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="field">
+          <label htmlFor="review">Your review</label>
+          <textarea id="review" onChange={(e) => setReview(e.target.value)} />
+          {errors.review ? <p className="error-text">{errors.review.message}</p> : null}
+          {errors.game ? <p className="error-text">{errors.game.message}</p> : null}
         </div>
-      </div>
+        <div className="field">
+          <label>Score</label>
+          <select onChange={(e) => setScore(e.target.value)}>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+        <input type="submit" value="Add Review" className="btn-primary-gradient" disabled={user ? false : true} />
+        {user ? null : <p className="error-text">Please log in to add a review!</p>}
+      </form>
     </div>
   )
 }

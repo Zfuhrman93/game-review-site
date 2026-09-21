@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
+import Platforms from './Platforms';
+
+const scoreClass = (score) => Number(score) >= 4 ? 'score high' : Number(score) <= 2 ? 'score low' : 'score';
 
 const GameDetails = (props) => {
   const { id, user } = props;
@@ -48,34 +51,33 @@ const GameDetails = (props) => {
   }
 
   return(
-    <div>
-      <div key={gameData._id} className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", flexWrap: "wrap", justifyContent: "space-evenly", padding: "5px", backgroundColor: "white", width: "900px", marginTop: "35px"}}>
-        <div style={{}}>
-          {gameData.gameCover ? <img src={require('../images/' + gameData.gameCover)} alt={gameData.name} style={{height: "350px", width: "250px"}}  /> : null}
-        </div>
-        {user && user.admin ? <div>
-          <button className="btn btn-danger" onClick={() => deleteGame(id)}>Delete Game</button><br/>
-        </div> : null}
-        <div style={{display:"flex", flexDirection: "column", textAlign: "center"}}>
-          <p>{gameData.name}</p>
-          {gameData && gameData.xbox ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Xbox.png")} alt="Xbox" /> : null}
-          {gameData && gameData.PS4 ? <img style={{height: "48px", width: "48px"}} src={require("../assets/PS4.png")} alt="PS4" /> : null}
-          {gameData && gameData.nSwitch ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Switch.png")} alt="Switch"/> : null}
-          {gameData && gameData.PC ? <img style={{height: "48px", width: "48px"}} src={require("../assets/Steam.png")} alt="PC"/> : null}
-        </div><br/>
-        <div style={{width: "800px", textAlign: "center"}}>
-            <h3 style={{marginTop: "15px"}}>Reviews</h3><br/>
-            {reviews.map((review) => {
-              return(
-                <div key={review._id} style={{marginTop: "15px"}}>
-                  Review by {review.userName} | Score: {review.score}/5
-                  <p>{review.review}</p>
-                  {user && review.user === user._id || user && user.admin ? <span><button className='btn btn-info' onClick={() => navigate(`/review/edit/${review._id}`)}>Edit</button> | <button className='btn btn-danger' onClick={() => handleDelete(review._id)}>Delete</button></span> : null}
-                </div>
-              )
-            })}
+    <div key={gameData._id}>
+      <div className="details-hero">
+        {gameData.gameCover ? <img className="details-cover" src={require('../images/' + gameData.gameCover)} alt={gameData.name} /> : <div />}
+        <div className="details-info">
+          <h1>{gameData.name}</h1>
+          <Platforms game={gameData} large />
+          {user && user.admin ? <button className="btn-danger-solid" onClick={() => deleteGame(id)}>Delete Game</button> : null}
         </div>
       </div>
+
+      <h2 className="section-title">Reviews <small>{reviews.length}</small></h2>
+      {reviews.length === 0 ? <p className="empty">No reviews yet. Be the first!</p> : null}
+      {reviews.map((review) => {
+        return(
+          <div key={review._id} className="review-card">
+            <div className="review-card-head">
+              <span>Review by <strong>{review.userName}</strong></span>
+              <span className={scoreClass(review.score)}>{review.score}/5</span>
+            </div>
+            <p>{review.review}</p>
+            {user && review.user === user._id || user && user.admin ? <div className="review-actions">
+              <button className='btn-ghost' onClick={() => navigate(`/review/edit/${review._id}`)}>Edit</button>
+              <button className='btn-ghost danger' onClick={() => handleDelete(review._id)}>Delete</button>
+            </div> : null}
+          </div>
+        )
+      })}
     </div>
   )
 }

@@ -19,25 +19,34 @@ const Register = (props) => {
       console.log(err.response)
       setErrors(err.response.data.errors)
     }
-    
+
   }
   return(
-    <div>
-      <div>
-        <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px", backgroundColor: "white", width: "275px", marginTop: "35px"}}>
-          <form onSubmit={handleSubmit}>
-            <label>User Name:</label><br/><input type='text' onChange={e => {setName(e.target.value)}} /><br/>
-            {errors && errors.name ? <p style={{color: "red"}}>{errors.name.message}</p> : null}
-            <label>E-mail:</label><br/><input type='text' onChange={e => {setEmail(e.target.value)}} /><br/>
-            {errors && errors.email ? <p style={{color: "red"}}>{errors.email.message}</p> : null}
-            <label>Password:</label><br/><input type='password' onChange={e => {setPassword(e.target.value)}} /><br/>
-            {errors && errors.password ? <p style={{color: "red"}}>{errors.password.message}</p> : null}
-            <label>Confirm Password:</label><br/><input type='password' onChange={e => {setConfirmPassword(e.target.value)}} /><br/>
-            {errors && errors.confirmPassword ? <p style={{color: "red"}}>{errors.confirmPassword.message}</p> : null}
-            <input type='submit' style={{marginTop: "5px"}} />
-          </form>
+    <div className="form-card">
+      <h2>Create an account</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="field">
+          <label>User Name</label>
+          <input type='text' onChange={e => {setName(e.target.value)}} />
+          {errors && errors.name ? <p className="error-text">{errors.name.message}</p> : null}
         </div>
-      </div>
+        <div className="field">
+          <label>E-mail</label>
+          <input type='text' onChange={e => {setEmail(e.target.value)}} />
+          {errors && errors.email ? <p className="error-text">{errors.email.message}</p> : null}
+        </div>
+        <div className="field">
+          <label>Password</label>
+          <input type='password' onChange={e => {setPassword(e.target.value)}} />
+          {errors && errors.password ? <p className="error-text">{errors.password.message}</p> : null}
+        </div>
+        <div className="field">
+          <label>Confirm Password</label>
+          <input type='password' onChange={e => {setConfirmPassword(e.target.value)}} />
+          {errors && errors.confirmPassword ? <p className="error-text">{errors.confirmPassword.message}</p> : null}
+        </div>
+        <input type='submit' value="Sign up" className="btn-primary-gradient" />
+      </form>
     </div>
   )
 }

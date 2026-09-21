@@ -42,21 +42,32 @@ const GameForm = (props) => {
 
   return(
     <div>
-      <div>
-        <Navbar user={user} />
-        <div className="container" style = {{textalign: "center", marginTop: "5px", display: "flex", justifyContent: "center", padding: "5px", backgroundColor: "white", width: "275px", marginTop: "35px"}}>
-          <form  onSubmit={handleSubmit}>
-            <label>Game Name:</label><br/><input name="name" type="text" onChange={(e) => setName(e.target.value)} /><br/>
-            {errors.name ? <p style={{color: "red"}}>{errors.name.message}</p> : null}
-            <label>Systems</label><br/>
-            <input type='checkbox' name='xbox' value={xbox} onChange={() => setXbox(!xbox)} /><label style={{marginRight: "5px"}}>Xbox One</label>
-            <input type='checkbox' name='PS4' value={PS4} onChange={() => setPS4(!PS4)} /><label style={{marginRight: "5px"}}>PS4</label>
-            <input type='checkbox' name='nSwitch' value={nSwitch} onChange={() => setNSwitch(!nSwitch)} /><label style={{marginRight: "5px"}}>Switch</label>
-            <input type='checkbox' name='PC' value={PC} onChange={() => setPC(!PC)} /><label style={{marginRight: "5px"}}>PC</label><br/>
-            {!xbox && !PS4 && !nSwitch && !PC ? <p style={{color: "red"}}>Please select at least one system</p> : null}
-            <label>Game Cover URL</label><br/><input name='file' type="file" accept=".jpeg, .jpg, .png" onChange={((e) => setGameCover(e.target.files[0]))} /><br/>
-            <input type="submit" value="Add Game" style={{marginTop: "7px"}} disabled={user ? false : true} />
-            {user ? null : <p style={{color: "red"}}>Please log in to add a game!</p>}
+      <Navbar user={user} />
+      <div className="page page-narrow">
+        <div className="form-card">
+          <h2>Add a game</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="field">
+              <label>Game Name</label>
+              <input name="name" type="text" onChange={(e) => setName(e.target.value)} />
+              {errors.name ? <p className="error-text">{errors.name.message}</p> : null}
+            </div>
+            <div className="field">
+              <span className="field-label">Systems</span>
+              <div className="checks">
+                <label className="check"><input type='checkbox' name='xbox' value={xbox} onChange={() => setXbox(!xbox)} />Xbox One</label>
+                <label className="check"><input type='checkbox' name='PS4' value={PS4} onChange={() => setPS4(!PS4)} />PS4</label>
+                <label className="check"><input type='checkbox' name='nSwitch' value={nSwitch} onChange={() => setNSwitch(!nSwitch)} />Switch</label>
+                <label className="check"><input type='checkbox' name='PC' value={PC} onChange={() => setPC(!PC)} />PC</label>
+              </div>
+              {!xbox && !PS4 && !nSwitch && !PC ? <p className="error-text">Please select at least one system</p> : null}
+            </div>
+            <div className="field">
+              <label>Game Cover</label>
+              <input name='file' type="file" accept=".jpeg, .jpg, .png" onChange={((e) => setGameCover(e.target.files[0]))} />
+            </div>
+            <input type="submit" value="Add Game" className="btn-primary-gradient" disabled={user ? false : true} />
+            {user ? null : <p className="error-text">Please log in to add a game!</p>}
           </form>
         </div>
       </div>

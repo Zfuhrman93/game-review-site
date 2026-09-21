@@ -15,17 +15,17 @@ const Navbar = (props) => {
   }
   const { user } = props
   return(
-    <div>
-      <div className="nav-bar">
-        <ul>
-          <li><Link to={"/"}>Home</Link></li>
-          <li style={{marginLeft: '5px', marginRight: "5px"}}></li>
-          {user ? <li style={{marginRight: "5px"}}><span>| </span><Link to={"/game/new"}>  Add a Game </Link></li> : null}
-        </ul>
-        <ul>
-          { user ? <li style={{color: "black", marginLeft: '5px', marginRight: "5px"}}>Welcome, { user.name }! | <button className="btn-small btn-danger" onClick={handleLogout}>LOGOUT</button></li> : <li><Link style={{marginTop: "15px", border: "2px solid black", paddingBottom: "8px", paddingRight: "8px", paddingLeft: "8px", backgroundColor: "white", borderRadius: "20px"}} to={'/login-register'}>Sign-In</Link></li>}
-        </ul>
-      </div>
+    <div className="nav-bar">
+      <ul>
+        <li className="nav-brand"><Link to={"/"}>Game Review</Link></li>
+        {user ? <li><Link to={"/game/new"}>+ Add a Game</Link></li> : null}
+      </ul>
+      <ul>
+        { user ? <>
+          <li className="nav-welcome"><span className="nav-welcome-text">Welcome, </span><strong>{ user.name }</strong></li>
+          <li><button className="btn-ghost danger" onClick={handleLogout}>Log out</button></li>
+        </> : <li><Link className="nav-cta" to={'/login-register'}>Sign in</Link></li>}
+      </ul>
     </div>
   )
 }
