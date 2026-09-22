@@ -11,8 +11,8 @@ const addNewGame = async (req, res) => {
 
   const data = { name, xbox, PS4, nSwitch, PC, gameCover}
   try{
-    const newGame = await new Game(data);
-    newGame.save()
+    const newGame = new Game(data);
+    await newGame.save();
     res.json(newGame);
   }catch(err){
     console.log('Error!');
@@ -42,7 +42,7 @@ const getGameById = async(req, res) => {
 
 const getGamesByTop = async(req, res) => {
   try{
-    const games = Game.find({ topPick: true })
+    const games = await Game.find({ topPick: true })
     res.json(games);
   }catch(err){
     res.status(400).json(err);

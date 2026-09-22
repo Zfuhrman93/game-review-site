@@ -69,7 +69,7 @@ const login = async (req, res) => {
 
   const usertoken = await jwt.sign({ _id: userQuery._id }, process.env.SECRET_KEY)
   res
-    .cookie("usertoken", usertoken, process.env.SECRET_KEY, {
+    .cookie("usertoken", usertoken, {
       httpOnly: true,
       expires: new Date(Date.now() + 90000000),
     })

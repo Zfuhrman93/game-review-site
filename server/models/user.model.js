@@ -26,8 +26,8 @@ const UserSchema = mongoose.Schema({
 
 
 UserSchema.virtual("confirmPassword")
-  .get(() => this._confirmPassword)
-  .set((value) => (this._confirmPassword = value));
+  .get(function () { return this._confirmPassword; })
+  .set(function (value) { this._confirmPassword = value; });
 
 UserSchema.pre("validate", function (next) {
   if(this.password !== this.confirmPassword){

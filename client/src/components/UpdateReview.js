@@ -30,7 +30,7 @@ const UpdateReview = (props) => {
         score,
       })
       console.log(result);
-      navigate('/home')
+      navigate('/')
     }catch(err){
       console.log(err);
     }
