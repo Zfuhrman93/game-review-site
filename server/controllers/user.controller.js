@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const getUser = async (req, res) => {
   try{
-    user = await User.find({ _id: req.params.id})
+    user = await User.find({ _id: req.params.id}).select('-password')
     res.json(user);
   }catch(err){
     console.log(err)
@@ -26,6 +26,8 @@ const registerUser = async (req, res) => {
   try{
     let newUser = new User(body);
     newUser = await newUser.save();
+    newUser = newUser.toObject();
+    delete newUser.password;
     res.json(newUser);
   }catch(error){
     console.log('Error!');
@@ -80,6 +82,7 @@ const login = async (req, res) => {
 const protected = async (req, res) => {
   const protectedToken = await req.cookies.usertoken;
   if(!protectedToken){
+    res.status(401).json({ error: "Not logged in" });
     return;
   }
   let decodedToken;
