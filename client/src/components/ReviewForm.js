@@ -27,11 +27,9 @@ const ReviewForm = (props) => {
       const result = await axios.post('http://localhost:8000/api/review', {
         review,
         score,
-        user: user._id,
         game: id,
-        userName: user.name,
         gameName: game[0].name
-      })
+      }, { withCredentials: true })
       console.log(result);
       navigate('/');
       window.location.reload(false);

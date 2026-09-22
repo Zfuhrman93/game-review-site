@@ -18,7 +18,7 @@ const Navbar = (props) => {
     <div className="nav-bar">
       <ul>
         <li className="nav-brand"><Link to={"/"}>Game Review</Link></li>
-        {user ? <li><Link to={"/game/new"}>+ Add a Game</Link></li> : null}
+        {user && user.admin ? <li><Link to={"/game/new"}>+ Add a Game</Link></li> : null}
       </ul>
       <ul>
         { user ? <>

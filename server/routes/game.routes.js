@@ -1,4 +1,5 @@
 const { addNewGame, getAllGames, getGameById, removeGame, updateGame, getGamesByTop } = require('../controllers/game.controller');
+const { requireAuth, requireAdmin } = require('../middleware/auth.middleware');
 const multer = require('multer');
 const path = require('path');
 
@@ -24,10 +25,10 @@ const fileFilter = (req, file, cb) => {
 let upload = multer({ storage, fileFilter });
 
 module.exports = app => {
-  app.post('/api/game/add', upload.single('file'), addNewGame)
+  app.post('/api/game/add', requireAuth, requireAdmin, upload.single('file'), addNewGame)
   app.get('/api/game/:id', getGameById)
   app.get('/api/game', getAllGames)
   app.get('/api/top/games', getGamesByTop)
-  app.put('/api/game/:id', updateGame)
-  app.delete('/api/game/:id', removeGame)
+  app.put('/api/game/:id', requireAuth, requireAdmin, updateGame)
+  app.delete('/api/game/:id', requireAuth, requireAdmin, removeGame)
 }

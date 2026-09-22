@@ -28,7 +28,7 @@ const UpdateReview = (props) => {
       const result = axios.put(`http://localhost:8000/api/review/${id}`, {
         review,
         score,
-      })
+      }, { withCredentials: true })
       console.log(result);
       navigate('/')
     }catch(err){

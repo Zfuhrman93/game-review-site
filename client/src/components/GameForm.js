@@ -15,7 +15,7 @@ const GameForm = (props) => {
   let formData = new FormData();
 
   useEffect(() => {
-    if(!user) navigate('/');
+    if(!user || !user.admin) navigate('/');
   })
 
   const handleSubmit = async (e) => {
@@ -30,7 +30,7 @@ const GameForm = (props) => {
     formData.append('file',gameCover)
 
     try{
-      const result = await axios.post('http://localhost:8000/api/game/add', formData)
+      const result = await axios.post('http://localhost:8000/api/game/add', formData, { withCredentials: true })
       console.log(result);
       navigate('/')
       window.location.reload(false);;
@@ -66,8 +66,8 @@ const GameForm = (props) => {
               <label>Game Cover</label>
               <input name='file' type="file" accept=".jpeg, .jpg, .png" onChange={((e) => setGameCover(e.target.files[0]))} />
             </div>
-            <input type="submit" value="Add Game" className="btn-primary-gradient" disabled={user ? false : true} />
-            {user ? null : <p className="error-text">Please log in to add a game!</p>}
+            <input type="submit" value="Add Game" className="btn-primary-gradient" disabled={user && user.admin ? false : true} />
+            {user && user.admin ? null : <p className="error-text">Only admins can add a game.</p>}
           </form>
         </div>
       </div>

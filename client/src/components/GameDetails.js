@@ -33,7 +33,7 @@ const GameDetails = (props) => {
 
   const deleteGame = async (gameId) => {
     try{
-      const deleteGame = await axios.delete(`http://localhost:8000/api/game/${gameId}`);
+      const deleteGame = await axios.delete(`http://localhost:8000/api/game/${gameId}`, { withCredentials: true });
       console.log(deleteGame);
       navigate('/');
     }catch(err){
@@ -42,7 +42,7 @@ const GameDetails = (props) => {
   }
 
   const handleDelete = (reviewId) => {
-    axios.delete(`http://localhost:8000/api/review/${reviewId}`)
+    axios.delete(`http://localhost:8000/api/review/${reviewId}`, { withCredentials: true })
       .then(res => {
         console.log(res);
         window.location.reload(false);
