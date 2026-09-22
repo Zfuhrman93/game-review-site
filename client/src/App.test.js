@@ -1,8 +1,19 @@
 import { render, screen } from '@testing-library/react';
+import axios from 'axios';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.mock('axios');
+
+beforeEach(() => {
+  axios.get.mockResolvedValue({ data: [] });
+});
+
+test('renders the site brand name', async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(await screen.findByText(/game review/i)).toBeInTheDocument();
+});
+
+test('shows a sign in link for a logged-out visitor', async () => {
+  render(<App />);
+  expect(await screen.findByText(/sign in/i)).toBeInTheDocument();
 });
