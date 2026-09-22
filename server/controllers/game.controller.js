@@ -1,5 +1,4 @@
 const Game = require('../models/game.model');
-const Sharp = require('sharp')
 
 const addNewGame = async (req, res) => {
   const name = req.body.name;

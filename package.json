@@ -21,16 +21,15 @@
   },
   "homepage": "https://github.com/Zfuhrman93/game-review-site#readme",
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^5.1.1",
     "concurrently": "^10.0.5",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
+    "express": "^4.22.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.5",
-    "multer": "^1.4.4",
-    "nodemon": "^2.0.16",
-    "sharp": "^0.30.4"
+    "mongoose": "^8.24.4",
+    "multer": "^1.4.5-lts.2",
+    "nodemon": "^2.0.16"
   }
 }
