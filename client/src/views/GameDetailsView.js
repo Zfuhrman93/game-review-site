@@ -1,9 +1,11 @@
+import { useParams } from 'react-router-dom';
 import GameDetails from '../components/GameDetails';
 import ReviewForm from '../components/ReviewForm';
 import Navbar from '../components/Navbar';
 
 const GameDetailsView = (props) => {
-  const { user, id } = props;
+  const { user } = props;
+  const { id } = useParams();
 
   return(
     <div>

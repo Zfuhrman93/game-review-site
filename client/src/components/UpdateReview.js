@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-import { navigate } from '@reach/router';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const UpdateReview = (props) => {
-  const { id, user } = props;
+  const { user } = props;
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [ review, setReview ] = useState("");
   const [ score, setScore ] = useState("1");
 

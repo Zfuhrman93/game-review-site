@@ -1,9 +1,10 @@
-import { Link, navigate } from '@reach/router';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
 
 const Navbar = (props) => {
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try{
       const request = await axios.post('http://localhost:8000/api/logout', {}, { withCredentials: true });

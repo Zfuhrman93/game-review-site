@@ -1,9 +1,10 @@
 import '../App.css';
 import { useState } from 'react';
 import axios from 'axios';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
+  const navigate = useNavigate();
   const [ email, setEmail ] =useState('');
   const [ password, setPassword ] = useState('');
   const [ errors, setErrors ] = useState({});

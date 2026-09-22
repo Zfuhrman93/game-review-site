@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './Navbar';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router-dom';
 
 const GameForm = (props) => {
   const { user } = props;
+  const navigate = useNavigate();
   const [ name, setName ] = useState("");
   const [ xbox, setXbox ] = useState(false);
   const [ PS4, setPS4 ] = useState(false);

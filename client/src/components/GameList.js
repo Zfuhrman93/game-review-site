@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 import Platforms from './Platforms';
 
 const GameList = (props) => {

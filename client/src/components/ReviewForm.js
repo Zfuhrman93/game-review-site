@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router-dom';
 const ReviewForm = (props) => {
   const { user, id } = props;
+  const navigate = useNavigate();
   const [ review, setReview ] = useState("");
   const [ score, setScore ] = useState("1");
   const [ game, setGame ] = useState("");

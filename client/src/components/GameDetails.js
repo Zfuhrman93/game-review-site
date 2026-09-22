@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { navigate } from '@reach/router';
+import { useNavigate } from 'react-router-dom';
 import Platforms from './Platforms';
 
 const scoreClass = (score) => Number(score) >= 4 ? 'score high' : Number(score) <= 2 ? 'score low' : 'score';
 
 const GameDetails = (props) => {
   const { id, user } = props;
+  const navigate = useNavigate();
   const [ gameData, setGameData ] = useState({});
   const [ reviews, setReviews ] = useState([]);
 
