@@ -25,7 +25,7 @@ const GameList = (props) => {
         {gameList.map((game) => {
           return(
             <Link key={game._id} className="game-card" to={`/game/${game._id}`}>
-              <img className="game-card-cover" src={require('../images/' + game.gameCover)} alt={game.name}/>
+              <img className="game-card-cover" src={game.gameCover} alt={game.name}/>
               <div className="game-card-body">
                 <div className="game-card-name">{game.name}</div>
                 <Platforms game={game} />

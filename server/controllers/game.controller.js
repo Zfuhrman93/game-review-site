@@ -1,4 +1,18 @@
 const Game = require('../models/game.model');
+const cloudinary = require('../config/cloudinary.config');
+
+const uploadCoverToCloudinary = (buffer) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder: 'game-review/covers' },
+      (err, result) => {
+        if (err) return reject(err);
+        resolve(result.secure_url);
+      }
+    );
+    uploadStream.end(buffer);
+  });
+}
 
 const addNewGame = async (req, res) => {
   const name = req.body.name;
@@ -6,10 +20,10 @@ const addNewGame = async (req, res) => {
   const PS4 = req.body.PS4;
   const nSwitch = req.body.nSwitch;
   const PC = req.body.PC;
-  const gameCover = req.file.filename;
 
-  const data = { name, xbox, PS4, nSwitch, PC, gameCover}
   try{
+    const gameCover = await uploadCoverToCloudinary(req.file.buffer);
+    const data = { name, xbox, PS4, nSwitch, PC, gameCover}
     const newGame = new Game(data);
     await newGame.save();
     res.json(newGame);
@@ -50,8 +64,12 @@ const getGamesByTop = async(req, res) => {
 
 const updateGame = async (req, res) => {
   try{
+    const data = { ...req.body };
+    if(req.file){
+      data.gameCover = await uploadCoverToCloudinary(req.file.buffer);
+    }
     const updatedGame = await Game.findOneAndUpdate({ _id: req.params.id },
-      req.body,
+      data,
       { new:true, runValidators:true })
     res.json(updatedGame);
   }catch(err){

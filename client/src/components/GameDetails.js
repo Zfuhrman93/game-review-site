@@ -53,7 +53,7 @@ const GameDetails = (props) => {
   return(
     <div key={gameData._id}>
       <div className="details-hero">
-        {gameData.gameCover ? <img className="details-cover" src={require('../images/' + gameData.gameCover)} alt={gameData.name} /> : <div />}
+        {gameData.gameCover ? <img className="details-cover" src={gameData.gameCover} alt={gameData.name} /> : <div />}
         <div className="details-info">
           <h1>{gameData.name}</h1>
           <Platforms game={gameData} large />
