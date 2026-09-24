@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 
 const scoreClass = (score) => Number(score) >= 4 ? 'score high' : Number(score) <= 2 ? 'score low' : 'score';
 
@@ -8,7 +9,7 @@ const Recent = (props) => {
 
   async function fetchData(){
     try{
-      const recents = await axios.get('http://localhost:8000/api/review/recent');
+      const recents = await axios.get(`${API_BASE}/api/review/recent`);
       console.log('Recents:')
       console.log(recents);
       setRecentReviews(recents.data);

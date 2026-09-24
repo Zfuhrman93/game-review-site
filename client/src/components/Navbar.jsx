@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE } from '../config';
 
 
 
@@ -7,7 +8,7 @@ const Navbar = (props) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try{
-      const request = await axios.post('http://localhost:8000/api/logout', {}, { withCredentials: true });
+      const request = await axios.post(`${API_BASE}/api/logout`, {}, { withCredentials: true });
       navigate('/');
       window.location.reload(false);
     }catch(err){

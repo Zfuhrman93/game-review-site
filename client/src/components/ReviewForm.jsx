@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 import { useNavigate } from 'react-router-dom';
 const ReviewForm = (props) => {
   const { user, id } = props;
@@ -12,7 +13,7 @@ const ReviewForm = (props) => {
   useEffect(()  => {
     async function fetchData() {
       try{
-        const gameData = await axios.get(`http://localhost:8000/api/game/${id}`);
+        const gameData = await axios.get(`${API_BASE}/api/game/${id}`);
         setGame(gameData.data);
       }catch(err){
         console.log(err)
@@ -25,7 +26,7 @@ const ReviewForm = (props) => {
     e.preventDefault();
     console.log(game[0].name)
     try{
-      const result = await axios.post('http://localhost:8000/api/review', {
+      const result = await axios.post(`${API_BASE}/api/review`, {
         review,
         score,
         game: id,

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 
 const Register = (props) => {
   const [ name, setName ] = useState('');
@@ -12,7 +13,7 @@ const Register = (props) => {
     e.preventDefault();
     const postData = { name, email, password, confirmPassword };
     try{
-      const result = await axios.post("http://localhost:8000/api/register", postData)
+      const result = await axios.post(`${API_BASE}/api/register`, postData)
       console.log(result)
       alert('Successful Registration!');
     }catch(err){

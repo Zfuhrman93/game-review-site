@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,7 +32,7 @@ const GameForm = (props) => {
     formData.append('file',gameCover)
 
     try{
-      const result = await axios.post('http://localhost:8000/api/game/add', formData, { withCredentials: true })
+      const result = await axios.post(`${API_BASE}/api/game/add`, formData, { withCredentials: true })
       console.log(result);
       navigate('/')
       window.location.reload(false);;

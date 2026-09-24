@@ -1,6 +1,7 @@
 import '../App.css';
 import { useState } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
@@ -13,7 +14,7 @@ const Login = (props) => {
     e.preventDefault();
     const postData = { email, password };
     try{
-      const result = await axios.post('http://localhost:8000/api/login',
+      const result = await axios.post(`${API_BASE}/api/login`,
       postData,
       { withCredentials: true }
     )

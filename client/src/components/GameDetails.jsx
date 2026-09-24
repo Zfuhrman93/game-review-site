@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 import { useNavigate } from 'react-router-dom';
 import Platforms from './Platforms';
 
@@ -13,7 +14,7 @@ const GameDetails = (props) => {
 
   useEffect(()  => {
     console.log(user)
-    axios.get(`http://localhost:8000/api/game/${id}`)
+    axios.get(`${API_BASE}/api/game/${id}`)
       .then((game) => {
         setGameData(game.data[0])
       })
@@ -23,7 +24,7 @@ const GameDetails = (props) => {
     fetchData();
     async function fetchData() {
       try{
-        const reviewData = await axios.get(`http://localhost:8000/api/review/${id}`);
+        const reviewData = await axios.get(`${API_BASE}/api/review/${id}`);
         console.log(reviewData);
         setReviews(reviewData.data);
       }catch(err){
@@ -34,7 +35,7 @@ const GameDetails = (props) => {
 
   const deleteGame = async (gameId) => {
     try{
-      const deleteGame = await axios.delete(`http://localhost:8000/api/game/${gameId}`, { withCredentials: true });
+      const deleteGame = await axios.delete(`${API_BASE}/api/game/${gameId}`, { withCredentials: true });
       console.log(deleteGame);
       navigate('/');
     }catch(err){
@@ -43,7 +44,7 @@ const GameDetails = (props) => {
   }
 
   const handleDelete = (reviewId) => {
-    axios.delete(`http://localhost:8000/api/review/${reviewId}`, { withCredentials: true })
+    axios.delete(`${API_BASE}/api/review/${reviewId}`, { withCredentials: true })
       .then(res => {
         console.log(res);
         window.location.reload(false);

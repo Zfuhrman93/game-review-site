@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import axios from 'axios';
 import App from './App';
 
-jest.mock('axios');
+vi.mock('axios');
 
 beforeEach(() => {
   axios.get.mockResolvedValue({ data: [] });

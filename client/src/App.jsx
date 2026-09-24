@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+import { API_BASE } from './config';
 import HomeView from './views/HomeView';
 import LoginRegister from './views/LoginRegister';
 import GameForm from './components/GameForm';
@@ -23,10 +24,10 @@ function App() {
   useEffect(()  => {
     async function fetchData() {
       try{
-        const userData = await axios.get('http://localhost:8000/api/protected', 
+        const userData = await axios.get(`${API_BASE}/api/protected`, 
         { withCredentials: true });
         try{
-          const userName = await axios.get(`http://localhost:8000/api/user/${userData.data}`)
+          const userName = await axios.get(`${API_BASE}/api/user/${userData.data}`)
           setUser(userName.data[0]);
         }catch(err){
           console.log(err);

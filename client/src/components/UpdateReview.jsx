@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 import Navbar from './Navbar';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ const UpdateReview = (props) => {
   useEffect(()  => {
     async function fetchData() {
       try{
-        const reviewUpdate = await axios.get(`http://localhost:8000/api/review/edit/${id}`);
+        const reviewUpdate = await axios.get(`${API_BASE}/api/review/edit/${id}`);
         console.log(reviewUpdate.data[0]);
         setReview(reviewUpdate.data[0].review);
         setScore(reviewUpdate.data[0].score);
@@ -27,7 +28,7 @@ const UpdateReview = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const result = axios.put(`http://localhost:8000/api/review/${id}`, {
+      const result = axios.put(`${API_BASE}/api/review/${id}`, {
         review,
         score,
       }, { withCredentials: true })

@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 import { Link } from 'react-router-dom';
 import Platforms from './Platforms';
 
 const GameList = (props) => {
   const [ gameList, setGameList ] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:8000/api/game')
+    axios.get(`${API_BASE}/api/game`)
       .then(allGames => {
         console.log(allGames);
         setGameList(allGames.data)
