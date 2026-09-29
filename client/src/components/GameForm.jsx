@@ -22,7 +22,6 @@ const GameForm = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
 
     formData.append('name', name)
     formData.append('xbox',xbox)
