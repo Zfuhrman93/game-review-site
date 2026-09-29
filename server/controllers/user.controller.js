@@ -2,6 +2,18 @@ const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+// In production the client and API are on different domains, so the cookie
+// must be SameSite=None (sent cross-site) and Secure (browsers require it
+// with None). Locally both run on http://localhost, where Lax works.
+// logout must clear with the same attributes or the browser ignores it.
+const isProduction = process.env.NODE_ENV === 'production';
+const cookieOptions = {
+  httpOnly: true,
+  path: '/',
+  sameSite: isProduction ? 'none' : 'lax',
+  secure: isProduction,
+};
+
 const getUser = async (req, res) => {
   try{
     user = await User.find({ _id: req.params.id}).select('-password')
@@ -74,7 +86,7 @@ const login = async (req, res) => {
   const usertoken = await jwt.sign({ _id: userQuery._id }, process.env.SECRET_KEY)
   res
     .cookie("usertoken", usertoken, {
-      httpOnly: true,
+      ...cookieOptions,
       expires: new Date(Date.now() + 90000000),
     })
     .json({ message: "Login Successful" })
@@ -87,13 +99,16 @@ const protected = async (req, res) => {
     res.status(401).json({ error: "Not logged in" });
     return;
   }
-  let decodedToken;
-  decodedToken = await jwt.verify(protectedToken, process.env.SECRET_KEY);
-  res.send(decodedToken._id)
+  try{
+    const decodedToken = jwt.verify(protectedToken, process.env.SECRET_KEY);
+    res.send(decodedToken._id)
+  }catch(err){
+    res.status(401).json({ error: "Invalid or expired session" });
+  }
 }
 
 const logout = (req, res) => {
-    res.clearCookie("usertoken", {} , { signed: true, httpOnly: true, path: '/' })
+    res.clearCookie("usertoken", cookieOptions)
     res.json({ message: "Log out successful!" })
 }
 
