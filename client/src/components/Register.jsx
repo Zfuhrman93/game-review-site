@@ -7,10 +7,13 @@ const Register = (props) => {
   const [ email, setEmail ] =useState('');
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setConfirmPassword ] = useState('');
-  const [ errors, setErrors ] = useState([]);
+  const [ errors, setErrors ] = useState({});
+  const [ formError, setFormError ] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
+    setFormError('');
     const postData = { name, email, password, confirmPassword };
     try{
       const result = await axios.post(`${API_BASE}/api/register`, postData)
@@ -18,7 +21,10 @@ const Register = (props) => {
       alert('Successful Registration!');
     }catch(err){
       console.log(err.response)
-      setErrors(err.response.data.errors)
+      // Mongoose validation failures come back as { errors: { field: {...} } };
+      // everything else (duplicate email, rate limit) as { error: "..." }.
+      setErrors(err.response?.data?.errors || {})
+      setFormError(err.response?.data?.error || '')
     }
 
   }
@@ -46,6 +52,7 @@ const Register = (props) => {
           <input type='password' onChange={e => {setConfirmPassword(e.target.value)}} />
           {errors && errors.confirmPassword ? <p className="error-text">{errors.confirmPassword.message}</p> : null}
         </div>
+        {formError ? <p className="error-text">{formError}</p> : null}
         <input type='submit' value="Sign up" className="btn-primary-gradient" />
       </form>
     </div>

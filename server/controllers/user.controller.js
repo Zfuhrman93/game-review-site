@@ -37,10 +37,14 @@ const registerUser = async (req, res) => {
   
 }
 
+// Compared against when no user matches, so unknown emails take as long as wrong
+// passwords and response timing doesn't reveal which emails have accounts.
+const DUMMY_HASH = bcrypt.hashSync('timing-equalizer', 10);
+
 const login = async (req, res) => {
   const { body } = req;
-  if(!body.email){
-    res.status(400).json({ error: "No E-mail provided"});
+  if(!body.email || !body.password){
+    res.status(400).json({ error: "E-mail and password are required"});
     return;
   }
 
@@ -52,14 +56,11 @@ const login = async (req, res) => {
     return;
   }
 
-  if(userQuery === null){
-    res.status(400).json({ error: "Cannot find user with that E-mail" });
-    return;
-  }
-
   try{
-    const compareBool = await bcrypt.compare(body.password, userQuery.password)
-    if(!compareBool){
+    // Same message and status whether the email or the password was wrong,
+    // so the login form can't be used to check who has an account.
+    const compareBool = await bcrypt.compare(body.password, userQuery ? userQuery.password : DUMMY_HASH)
+    if(!userQuery || !compareBool){
       res.status(401).json({ error: "Incorrect E-mail/Password combo" });
       return;
     }
