@@ -70,7 +70,7 @@ const updateGame = async (req, res) => {
     }
     const updatedGame = await Game.findOneAndUpdate({ _id: req.params.id },
       data,
-      { new:true, runValidators:true })
+      { returnDocument: 'after', runValidators:true })
     res.json(updatedGame);
   }catch(err){
     console.log('Error!');

@@ -78,7 +78,7 @@ const updateReview = async (req, res) => {
   try{
     const updatedReview = await Review.findOneAndUpdate({ _id: req.params.id },
       req.body,
-      { new:true, runValidators:true })
+      { returnDocument: 'after', runValidators:true })
     res.json(updatedReview);
   }catch(err){
     console.log('Error!');
