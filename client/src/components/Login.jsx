@@ -14,16 +14,14 @@ const Login = (props) => {
     e.preventDefault();
     const postData = { email, password };
     try{
-      const result = await axios.post(`${API_BASE}/api/login`,
+      await axios.post(`${API_BASE}/api/login`,
       postData,
       { withCredentials: true }
     )
-      console.log(result);
       navigate('/');
       window.location.reload(false);
     }catch(err){
-      console.log(err.response.data);
-      setErrors(err.response.data);
+      setErrors(err.response?.data || {});
     }
   }
 

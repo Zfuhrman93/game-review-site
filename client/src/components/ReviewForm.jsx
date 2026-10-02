@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { API_BASE } from '../config';
+import { API_BASE, REVIEW_MAX_LENGTH } from '../config';
 import { useNavigate } from 'react-router-dom';
 const ReviewForm = (props) => {
   const { user, id } = props;
@@ -16,7 +16,7 @@ const ReviewForm = (props) => {
         const gameData = await axios.get(`${API_BASE}/api/game/${id}`);
         setGame(gameData.data);
       }catch(err){
-        console.log(err)
+        console.error(err);
       }
     }
     fetchData();
@@ -24,20 +24,17 @@ const ReviewForm = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(game[0].name)
     try{
-      const result = await axios.post(`${API_BASE}/api/review`, {
+      await axios.post(`${API_BASE}/api/review`, {
         review,
         score,
         game: id,
         gameName: game[0].name
       }, { withCredentials: true })
-      console.log(result);
       navigate('/');
       window.location.reload(false);
     }catch(err){
-      console.log(err.response.data.errors);
-      setErrors(err.response.data.errors);
+      setErrors(err.response?.data?.errors || {});
     }
   }
 
@@ -47,7 +44,8 @@ const ReviewForm = (props) => {
       <form onSubmit={handleSubmit}>
         <div className="field">
           <label htmlFor="review">Your review</label>
-          <textarea id="review" onChange={(e) => setReview(e.target.value)} />
+          <textarea id="review" maxLength={REVIEW_MAX_LENGTH} onChange={(e) => setReview(e.target.value)} />
+          <span className="char-count">{review.length}/{REVIEW_MAX_LENGTH}</span>
           {errors.review ? <p className="error-text">{errors.review.message}</p> : null}
           {errors.game ? <p className="error-text">{errors.game.message}</p> : null}
         </div>

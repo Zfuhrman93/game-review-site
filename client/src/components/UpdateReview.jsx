@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { API_BASE } from '../config';
+import { API_BASE, REVIEW_MAX_LENGTH } from '../config';
 import Navbar from './Navbar';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -10,16 +10,16 @@ const UpdateReview = (props) => {
   const navigate = useNavigate();
   const [ review, setReview ] = useState("");
   const [ score, setScore ] = useState("1");
+  const [ errors, setErrors ] = useState({});
 
   useEffect(()  => {
     async function fetchData() {
       try{
         const reviewUpdate = await axios.get(`${API_BASE}/api/review/edit/${id}`);
-        console.log(reviewUpdate.data[0]);
         setReview(reviewUpdate.data[0].review);
         setScore(reviewUpdate.data[0].score);
       }catch(err){
-        console.log(err);
+        console.error(err);
       }
     }
     fetchData();
@@ -28,14 +28,13 @@ const UpdateReview = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const result = axios.put(`${API_BASE}/api/review/${id}`, {
+      await axios.put(`${API_BASE}/api/review/${id}`, {
         review,
         score,
       }, { withCredentials: true })
-      console.log(result);
       navigate('/')
     }catch(err){
-      console.log(err);
+      setErrors(err.response?.data?.errors || {});
     }
   }
 
@@ -48,7 +47,9 @@ const UpdateReview = (props) => {
           <form onSubmit={handleSubmit}>
             <div className="field">
               <label>Your review</label>
-              <textarea value={review} onChange={(e) => setReview(e.target.value)} />
+              <textarea value={review} maxLength={REVIEW_MAX_LENGTH} onChange={(e) => setReview(e.target.value)} />
+              <span className="char-count">{review.length}/{REVIEW_MAX_LENGTH}</span>
+              {errors.review ? <p className="error-text">{errors.review.message}</p> : null}
             </div>
             <div className="field">
               <label>Score</label>

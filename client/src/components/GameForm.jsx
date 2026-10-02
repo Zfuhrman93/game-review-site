@@ -31,13 +31,11 @@ const GameForm = (props) => {
     formData.append('file',gameCover)
 
     try{
-      const result = await axios.post(`${API_BASE}/api/game/add`, formData, { withCredentials: true })
-      console.log(result);
+      await axios.post(`${API_BASE}/api/game/add`, formData, { withCredentials: true })
       navigate('/')
-      window.location.reload(false);;
+      window.location.reload(false);
     }catch(err){
-      console.log(err.response.data);
-      setErrors(err.response.data.errors);
+      setErrors(err.response?.data?.errors || {});
     }
   }
 
