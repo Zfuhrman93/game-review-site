@@ -6,6 +6,7 @@ import LoginRegister from './views/LoginRegister';
 import GameForm from './components/GameForm';
 import ReviewForm from './components/ReviewForm';
 import UpdateReview from './components/UpdateReview';
+import WakeBanner from './components/WakeBanner';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import GameDetailsView from './views/GameDetailsView';
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <div className="App" style={{height: "100%"}}>
+      <WakeBanner />
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route path='/' element={<HomeView user={user} />} />
