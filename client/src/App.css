@@ -624,3 +624,39 @@ h1, h2, h3, h4 {
     display: none;
   }
 }
+
+/* ---------- Cold-start banner ---------- */
+.wake-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow);
+  padding: 12px 18px;
+  font-size: 0.9rem;
+}
+
+.wake-banner-dot {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  animation: wake-blink 1s steps(2, start) infinite;
+}
+
+@keyframes wake-blink {
+  to { visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wake-banner-dot { animation: none; }
+}
