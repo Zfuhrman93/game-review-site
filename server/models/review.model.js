@@ -4,7 +4,8 @@ const reviewSchema = new mongoose.Schema({
   review:{
     type: String,
     required: [true, "Please write your review before submitting"],
-    minlength: [10, "Review must be atleast 10 characters long to submit"]
+    minlength: [10, "Review must be atleast 10 characters long to submit"],
+    maxlength: [2000, "Review can be at most 2000 characters long"]
   },
   score: {
     type: String,

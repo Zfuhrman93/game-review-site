@@ -10,30 +10,19 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import GameDetailsView from './views/GameDetailsView';
 
-const realError = console.error;
-console.error = (...x) => {
-  if (x[0] === 'Warning: The tag <hl> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter.') {
-    return;
-  }
-  realError(...x);
-};
-
 function App() {
   const [ user, setUser ] = useState();
   
   useEffect(()  => {
     async function fetchData() {
       try{
-        const userData = await axios.get(`${API_BASE}/api/protected`, 
+        const userData = await axios.get(`${API_BASE}/api/protected`,
         { withCredentials: true });
-        try{
-          const userName = await axios.get(`${API_BASE}/api/user/${userData.data}`)
-          setUser(userName.data[0]);
-        }catch(err){
-          console.log(err);
-        }
+        const userName = await axios.get(`${API_BASE}/api/user/${userData.data}`)
+        setUser(userName.data[0]);
       }catch(err){
-        console.log(err);
+        // A 401 just means nobody is logged in
+        if(err.response?.status !== 401) console.error(err);
       }
     }
     fetchData();
@@ -41,7 +30,7 @@ function App() {
 
   return (
     <div className="App" style={{height: "100%"}}>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route path='/' element={<HomeView user={user} />} />
           <Route path='/game/:id' element={<GameDetailsView user={user} />} />

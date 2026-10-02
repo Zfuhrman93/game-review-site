@@ -16,11 +16,9 @@ const Register = (props) => {
     setFormError('');
     const postData = { name, email, password, confirmPassword };
     try{
-      const result = await axios.post(`${API_BASE}/api/register`, postData)
-      console.log(result)
+      await axios.post(`${API_BASE}/api/register`, postData)
       alert('Successful Registration!');
     }catch(err){
-      console.log(err.response)
       // Mongoose validation failures come back as { errors: { field: {...} } };
       // everything else (duplicate email, rate limit) as { error: "..." }.
       setErrors(err.response?.data?.errors || {})

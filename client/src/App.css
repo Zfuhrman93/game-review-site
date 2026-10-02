@@ -334,6 +334,7 @@ h1, h2, h3, h4 {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  overflow-wrap: anywhere;
 }
 
 .recent-game {
@@ -426,6 +427,39 @@ h1, h2, h3, h4 {
 .review-card p {
   margin: 0 0 12px;
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.review-text.clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.see-more {
+  display: block;
+  margin: -4px 0 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-dim);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.see-more:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.char-count {
+  align-self: flex-end;
+  font-size: 0.72rem;
+  color: #555;
 }
 
 .review-actions {

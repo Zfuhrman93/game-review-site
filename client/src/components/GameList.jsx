@@ -9,11 +9,10 @@ const GameList = (props) => {
   useEffect(() => {
     axios.get(`${API_BASE}/api/game`)
       .then(allGames => {
-        console.log(allGames);
         setGameList(allGames.data)
       })
       .catch((err) => {
-        console.log(err.response);
+        console.error(err);
       })
   }, [])
 

@@ -8,11 +8,11 @@ const Navbar = (props) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try{
-      const request = await axios.post(`${API_BASE}/api/logout`, {}, { withCredentials: true });
+      await axios.post(`${API_BASE}/api/logout`, {}, { withCredentials: true });
       navigate('/');
       window.location.reload(false);
     }catch(err){
-      console.log(err.response)
+      console.error(err);
     }
   }
   const { user } = props

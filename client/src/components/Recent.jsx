@@ -10,11 +10,9 @@ const Recent = (props) => {
   async function fetchData(){
     try{
       const recents = await axios.get(`${API_BASE}/api/review/recent`);
-      console.log('Recents:')
-      console.log(recents);
       setRecentReviews(recents.data);
     }catch(err){
-      console.log(err)
+      console.error(err);
     }
   }
   useEffect(() => {

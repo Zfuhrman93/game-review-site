@@ -28,7 +28,7 @@ const addNewGame = async (req, res) => {
     await newGame.save();
     res.json(newGame);
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -38,7 +38,7 @@ const getAllGames = async (req, res) => {
     const allGames = await Game.find()
     res.json(allGames)
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -48,7 +48,7 @@ const getGameById = async(req, res) => {
     const foundGame = await Game.find({ _id: req.params.id })
     res.json(foundGame);
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -73,7 +73,7 @@ const updateGame = async (req, res) => {
       { returnDocument: 'after', runValidators:true })
     res.json(updatedGame);
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -83,7 +83,7 @@ const removeGame = async (req, res) => {
     const deletedGame = await Game.deleteOne({ _id: req.params.id })
     res.json(deletedGame);
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }

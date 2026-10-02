@@ -11,7 +11,7 @@ const addNewReview = async (req, res) => {
     });
     res.json(newReview);
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -40,7 +40,7 @@ const getAllReviews = async (req, res) => {
     const allReviews = await Review.find()
     res.json(allReviews);
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -50,7 +50,8 @@ const getReview = async (req, res) => {
     const oneReview = await Review.find({ _id: req.params.id })
     res.json(oneReview)
   }catch(err){
-    console.log(err);
+    console.error(err);
+    res.status(400).json(err);
   }
 }
 
@@ -59,7 +60,7 @@ const findByGame = async (req, res) => {
     const gameReviews = await Review.find({ game: req.params.id })
     res.json(gameReviews)
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -69,7 +70,7 @@ const recentReviews = async (req, res) => {
     const recents = await Review.find().sort({_id: -1}).limit(5)
     res.json(recents)
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -81,7 +82,7 @@ const updateReview = async (req, res) => {
       { returnDocument: 'after', runValidators:true })
     res.json(updatedReview);
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }
@@ -91,7 +92,7 @@ const deleteReview = async (req, res) => {
     const deletedReview = await Review.deleteOne({ _id: req.params.id })
     res.json(deletedReview);
   }catch(err){
-    console.log('Error!');
+    console.error(err);
     res.status(400).json(err);
   }
 }

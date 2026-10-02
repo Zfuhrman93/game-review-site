@@ -3,6 +3,7 @@ import axios from 'axios';
 import { API_BASE } from '../config';
 import { useNavigate } from 'react-router-dom';
 import Platforms from './Platforms';
+import ReviewText from './ReviewText';
 
 const scoreClass = (score) => Number(score) >= 4 ? 'score high' : Number(score) <= 2 ? 'score low' : 'score';
 
@@ -13,43 +14,39 @@ const GameDetails = (props) => {
   const [ reviews, setReviews ] = useState([]);
 
   useEffect(()  => {
-    console.log(user)
     axios.get(`${API_BASE}/api/game/${id}`)
       .then((game) => {
         setGameData(game.data[0])
       })
       .catch((err) => {
-        console.log(err.response);
+        console.error(err);
       })
     fetchData();
     async function fetchData() {
       try{
         const reviewData = await axios.get(`${API_BASE}/api/review/${id}`);
-        console.log(reviewData);
         setReviews(reviewData.data);
       }catch(err){
-        console.log(err)
+        console.error(err);
       }
     }
   }, [])
 
   const deleteGame = async (gameId) => {
     try{
-      const deleteGame = await axios.delete(`${API_BASE}/api/game/${gameId}`, { withCredentials: true });
-      console.log(deleteGame);
+      await axios.delete(`${API_BASE}/api/game/${gameId}`, { withCredentials: true });
       navigate('/');
     }catch(err){
-      console.log(err);
+      console.error(err);
     }
   }
 
   const handleDelete = (reviewId) => {
     axios.delete(`${API_BASE}/api/review/${reviewId}`, { withCredentials: true })
-      .then(res => {
-        console.log(res);
+      .then(() => {
         window.location.reload(false);
       })
-      .catch(err => console.log(err.response))
+      .catch(err => console.error(err))
   }
 
   return(
@@ -72,7 +69,7 @@ const GameDetails = (props) => {
               <span>Review by <strong>{review.userName}</strong></span>
               <span className={scoreClass(review.score)}>{review.score}/5</span>
             </div>
-            <p>{review.review}</p>
+            <ReviewText text={review.review} />
             {user && review.user === user._id || user && user.admin ? <div className="review-actions">
               <button className='btn-ghost' onClick={() => navigate(`/review/edit/${review._id}`)}>Edit</button>
               <button className='btn-ghost danger' onClick={() => handleDelete(review._id)}>Delete</button>
