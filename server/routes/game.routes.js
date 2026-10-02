@@ -1,15 +1,6 @@
 const { addNewGame, getAllGames, getGameById, removeGame, updateGame, getGamesByTop } = require('../controllers/game.controller');
+const { requireAuth, requireAdmin } = require('../middleware/auth.middleware');
 const multer = require('multer');
-const path = require('path');
-
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, path.join(__dirname, '../../client/src/images'))
-  },
-  filename: function(req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + ".AVIF")
-  }
-})
 
 const fileFilter = (req, file, cb) => {
   const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -21,13 +12,13 @@ const fileFilter = (req, file, cb) => {
   }
 }
 
-let upload = multer({ storage, fileFilter });
+let upload = multer({ storage: multer.memoryStorage(), fileFilter });
 
 module.exports = app => {
-  app.post('/api/game/add', upload.single('file'), addNewGame)
+  app.post('/api/game/add', requireAuth, requireAdmin, upload.single('file'), addNewGame)
   app.get('/api/game/:id', getGameById)
   app.get('/api/game', getAllGames)
   app.get('/api/top/games', getGamesByTop)
-  app.put('/api/game/:id', updateGame)
-  app.delete('/api/game/:id', removeGame)
+  app.put('/api/game/:id', requireAuth, requireAdmin, upload.single('file'), updateGame)
+  app.delete('/api/game/:id', requireAuth, requireAdmin, removeGame)
 }

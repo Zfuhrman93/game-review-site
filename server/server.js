@@ -4,6 +4,12 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+// Hosts like Render/Railway sit behind one reverse proxy; trust it so req.ip
+// is the visitor's IP and rate limiting is per user, not shared by everyone.
+if(process.env.NODE_ENV === 'production'){
+  app.set('trust proxy', 1);
+}
+
 app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
 const cookieParser = require('cookie-parser');
 require('./config/mongoose.config');

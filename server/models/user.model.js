@@ -9,6 +9,8 @@ const UserSchema = mongoose.Schema({
   email: {
     type: String,
     required: [true, "E-Mail is required"],
+    lowercase: true,
+    trim: true,
     validate: {
       validator: (val) => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
       message: "Please enter a valid E-Mail"
@@ -26,27 +28,21 @@ const UserSchema = mongoose.Schema({
 
 
 UserSchema.virtual("confirmPassword")
-  .get(() => this._confirmPassword)
-  .set((value) => (this._confirmPassword = value));
+  .get(function () { return this._confirmPassword; })
+  .set(function (value) { this._confirmPassword = value; });
 
-UserSchema.pre("validate", function (next) {
-  if(this.password !== this.confirmPassword){
+// Only check/hash when the password itself changed, so re-saving an existing
+// user (e.g. to change a name or admin flag) doesn't fail validation or
+// hash the already-hashed password.
+UserSchema.pre("validate", function () {
+  if(this.isModified("password") && this.password !== this.confirmPassword){
     this.invalidate("confirmPassword", "Passwords must match");
   }
-  next();
 });
 
-UserSchema.pre("save", function (next) {
-  bcrypt
-    .hash(this.password, 10)
-    .then((hash) => {
-      this.password = hash;
-      next();
-    })
-    .catch((err) => {
-      console.log('Error!');
-      console.log(err);
-    })
+UserSchema.pre("save", async function () {
+  if(!this.isModified("password")) return;
+  this.password = await bcrypt.hash(this.password, 10);
 })
 
 

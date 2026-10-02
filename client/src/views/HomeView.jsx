@@ -8,16 +8,14 @@ const HomeView = (props) => {
   return(
     <React.Fragment>
       <React.Suspense fallback={"Loading"}>
-        <div style={{textAlign: 'center'}}>
-          <Navbar user={user} />
-        </div>
+        <Navbar user={user} />
       </React.Suspense>
       <React.Suspense fallback={"loading"}>
-        <div className="container" style = {{marginTop: "5px", display: "flex", padding: "5px"}}>
-          <div style={{flex: "3"}}>
+        <div className="page home-layout">
+          <div>
             <GameList />
           </div>
-          <div style={{height: "200px", flex: "1"}}>
+          <div>
             <Recent />
           </div>
         </div>

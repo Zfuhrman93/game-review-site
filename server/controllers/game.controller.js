@@ -1,5 +1,18 @@
 const Game = require('../models/game.model');
-const Sharp = require('sharp')
+const cloudinary = require('../config/cloudinary.config');
+
+const uploadCoverToCloudinary = (buffer) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder: 'game-review/covers' },
+      (err, result) => {
+        if (err) return reject(err);
+        resolve(result.secure_url);
+      }
+    );
+    uploadStream.end(buffer);
+  });
+}
 
 const addNewGame = async (req, res) => {
   const name = req.body.name;
@@ -7,12 +20,12 @@ const addNewGame = async (req, res) => {
   const PS4 = req.body.PS4;
   const nSwitch = req.body.nSwitch;
   const PC = req.body.PC;
-  const gameCover = req.file.filename;
 
-  const data = { name, xbox, PS4, nSwitch, PC, gameCover}
   try{
-    const newGame = await new Game(data);
-    newGame.save()
+    const gameCover = await uploadCoverToCloudinary(req.file.buffer);
+    const data = { name, xbox, PS4, nSwitch, PC, gameCover}
+    const newGame = new Game(data);
+    await newGame.save();
     res.json(newGame);
   }catch(err){
     console.log('Error!');
@@ -42,7 +55,7 @@ const getGameById = async(req, res) => {
 
 const getGamesByTop = async(req, res) => {
   try{
-    const games = Game.find({ topPick: true })
+    const games = await Game.find({ topPick: true })
     res.json(games);
   }catch(err){
     res.status(400).json(err);
@@ -51,9 +64,13 @@ const getGamesByTop = async(req, res) => {
 
 const updateGame = async (req, res) => {
   try{
+    const data = { ...req.body };
+    if(req.file){
+      data.gameCover = await uploadCoverToCloudinary(req.file.buffer);
+    }
     const updatedGame = await Game.findOneAndUpdate({ _id: req.params.id },
-      req.body,
-      { new:true, runValidators:true })
+      data,
+      { returnDocument: 'after', runValidators:true })
     res.json(updatedGame);
   }catch(err){
     console.log('Error!');
